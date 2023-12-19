@@ -1,0 +1,66 @@
+:root {
+  --FrontColor: #6e6e6e;
+  --MiddleColor:#4a4a4a;
+  --BackColor: #363636;
+}
+
+.gb_Vd /* top bar */
+{
+    transition: 0 !important;
+    background-color: var(--BackColor) !important;
+}
+
+.WFnNle, .RvYhPd /* page background */
+{
+    background-color: var(--MiddleColor) !important;
+}
+
+.EO28P /* translation panel top bar */
+{
+    background-color: var(--BackColor) !important;
+}
+
+
+.rm1UF.UnxENd /* left translation panel */
+{
+    background-color: var(--BackColor) !important;
+}
+
+.er8xn /* left translation panel textarea */
+{
+    color: white !important;
+}
+
+.QcsUad /* right translation panel */
+{
+    background-color: var(--BackColor) !important;
+}
+.JLqJ4b.ChMk0b /* right translation panel textarea */
+{
+    color: white !important;
+}
+
+.SMqeCb, .a2Icud, .Dwvecf /* Info fields */
+{
+    background-color: var(--BackColor) !important; 
+}
+
+.ySES5 /* Bottom buttons */
+{
+   background-color: var(--BackColor) !important; 
+}
+
+.KskmCc, .RstnCb.sG5QRb /* Change Language search bar */
+{
+   background-color: var(--BackColor) !important; 
+}
+
+.SL5JTc /* Change Language bottom screen */
+{
+   background-color: var(--BackColor) !important; 
+}
+
+.vLsFwd.lyY31c /* Remove fades */
+{
+   background-color: var(--BackColor) !important; 
+}

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Manipulator</title>
+        <script src="popup.js"></script>
+        <link rel="stylesheet" type="text/css" href="popup.css">
+        <script type="text/javascript" src="libs/ace/ace.js"></script>
+        <script src="libs/ace/ext-language_tools.js"></script>
+    </head>
+    <body>
+        <header>
+            
+            <h2 class="text" style="display: inline; margin: 0px; padding: 0px;">Page Manipulator</h2> 
+            <h3 id="message-text" class="text">Saved!</h3> 
+            <hr style="clear:both; border-top: 1px solid #ff8800;"/>
+        </header>
+        
+        <div id="nav-area">
+            <ul id="navbar">
+                <h1 class="labeltext" id="menu-title-label">
+                    Main Menu                  
+                </h1>
+                <hr class="division-line" id="menu-title-divider">
+                <li>
+                    <div id="back-div">
+                        <input type="submit" value="Back" id="back-button" class="nav-button small-button">
+                        <input type="submit" value="Reload" id="reload-button" class="nav-button small-button">
+                    </div>
+                </li>
+                <h3 class="labeltext", id="language-selection-label">
+                    Injection type:
+                </h3>
+                <li>
+                    <input type="submit" value="JavaScript" id="JS-button" class="nav-button">
+                </li>
+                <li>
+                    <input type="submit" value="CSS" id="CSS-button" class="nav-button">   
+                </li>
+                <li>
+                    <input type="submit" value="HTML" id="HTML-button" class="nav-button">
+                </li>
+                <hr class="division-line main-menu-division-line">
+                <h3 class="labeltext", id="extra-info-label">
+                    Extra info:
+                </h3>
+
+                <li>
+                    <input type="submit" value="Info" id="info-button" class="nav-button">
+                </li>
+
+                <li>
+                    <input type="submit" value="Report a bug" id="bug-report-button" class="nav-button">
+                </li>
+
+                <hr class="division-line main-menu-division-line">
+                <h3 class="labeltext", id="project-support-label">
+                    Support the project:
+                </h3>
+                <form action="https://www.paypal.com/donate" method="post" target="_blank" id="donate-button" align="center">
+                    <input type="hidden" name="hosted_button_id" value="2WNMJ7WPWAQHQ" />
+                    <input type="image" src="https://www.eurozine.com/wp-content/uploads/2018/12/paypal-donate-button-high-quality-png.png" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" style="width: 130px;" />
+                </form>
+
+                <li>
+                    <input type="submit" value="+ New +" id="new-button" class="nav-button">
+                </li>
+
+                <li>
+                    <h3 class="labeltext" id=filename-label>Filename:</h3>
+                    <div id="change-filename-not-editing-div">
+                        <i><h3 class="labeltext" id=change-filename-label>Google.com.js</h3></i>
+                        <img id="change-filename-button" src="https://cdn1.iconfinder.com/data/icons/website-internet/48/website_-_pencil-512.png">
+                    </div>
+                    <div id="change-filename-editing-div">
+                        <input type="text" value="filename" id="change-filename-textfield" maxlength="50">
+                        <div id="change-filename-button-div">
+                            <input type="submit" value="Cancel" id="cancel-filename-change-button" class="nav-button small-button">
+                            <input type="submit" value="Save" id="save-filename-change-button" class="nav-button small-button">
+                        </div>
+                    </div>
+                </li>
+
+                <hr class="division-line editor-menu-division-line">
+                
+
+                <li>
+                    <div>
+                        <h3 class="labeltext" id=active-label>Active:</h3>
+                        <input type="checkbox" id="active-checkbox" class="checkbox" checked>
+                    </div> 
+                </li>
+              
+                <li>
+                    <h3 class="labeltext" id=active-websites-label>Active websites:</h3>
+                    <textarea id="enabled-sites-text-area" placeholder="URL(s) or 'all'">
+                    </textarea>
+                </li>
+                <li>
+                    <h3 class="labeltext" id=matching-pages-label>Matching pages:</h3>
+                    <select class="selection" id="mode-selection">
+                            <option value="exact">Exact</option>
+                            <option value="recursive">Recursive</option>
+                    </select>
+                </li>
+                <li>
+                    <h3 class="labeltext" id=position-label>Position on page:</h3>
+                    <select class="selection" id="position-selection">
+                        <option value="top">Top</option>
+                        <option value="bottom">Bottom</option>
+                        <option value="replace">Replace</option>
+                    </select>
+                </li>
+
+                <li>
+                    <input type="submit" value="Manipulate" id="try-button" class="nav-button">
+                </li>
+
+                <li>
+                    <button type="submit" value="Remove Manip." id="remove-try-button" class="nav-button">
+                        Remove Manip. <br>
+                        <ul style="list-style-type: none; margin: 0; padding: 0;">
+                            <li>
+                                <i>Auto &#8635;<i>
+                                <input style="z-index: 6;" type="checkbox" id="reload-on-remove-checkbox" class="checkbox" checked>
+                            </li>
+                        </ul>
+                    </button>
+                </li>
+
+                <li>
+                    <input type="submit" value="Delete" id="delete-button" class="nav-button">
+                </li>
+                <li>
+                    <h3 class="labeltext" id=filename-input-label>Filename:</h3>
+                    <input type="text" value="filename" id="filename-textfield" maxlength="50">
+                </li>
+                <li>
+                    <input type="submit" value="Make" id="make-button" class="nav-button">
+                </li>
+
+            </ul>
+        </div>
+        <div id="write-area">
+            <ul id="open-files-list">
+            </ul>
+
+            <div id="editor">
+            </div>
+            
+            <div id="error-text", align="center" style="display: 'none'">
+                <h1 class="text">
+                    <br> This page can't be manipulated :(
+                </h1>
+                <h2 class="text", style="z-index:10;">
+                    <br>
+                    Special pages like 'about:blank', 'chrome://extensions/', and more can't be manipulated. <br><br>
+                    If you think you are getting this message because of a bug, try reloading.<br> 
+                    If that doesn't work please report the bug <a href="https://github.com/Ruud14/Page-Manipulator/issues" target="_blank">here.</a>
+                    
+                </h2>
+            </div>
+            
+            <h4 id="info-text" align="left" class="text">
+                Inject HTML, CSS or JavaScript into any web-page.
+                After checking the "Active" checkbox, your manipulations will be applied every time <br>
+                you visit the sites that you specified in the "Active websites" field.
+                <br>
+                <br>
+                <strong><u>Fun use cases:</u></strong><br>
+                -Cheat simple games like the t-rex game.<br>
+                -Fool your friends by showing them fake data on a website.<br>
+                -Make your own dark-theme for any website.<br>
+                -Test a website you're working on.<br>
+                -Whatever you can imagine, be creative.<br>
+                <br>
+                <br>
+                <strong><u>Better than 'inspect element' because the changes will stay after reloading.</u></strong>
+
+            </h4>
+        </div>
+        <footer>
+            <ul id="zoom-menu" style="list-style-type: none;">
+                <li><input type="submit" value="-" id="zoom-out-button" class="zoombutton"></li>
+                <li><h4 id="zoom-percentage-label">100 %</h4></li>
+                <li><input type="submit" value="+" id="zoom-in-button" class="zoombutton"></li>
+            </ul>
+            
+            <a href="https://github.com/Ruud14/Page-Manipulator" target="_blank">Github.com/Ruud14/Page-Manipulator</a>
+        </footer>
+
+    </body>
+</html>

@@ -1,0 +1,282 @@
+:root{
+    --slider-color: #646464;
+    --text-color: #646464;
+    --button-color: #ff8800;
+    --back-color:#202020;
+    --dropdown-color:#262626;
+    --textarea-color:#262626; 
+    --message-color: greenyellow;
+}
+body
+{
+    min-width: 600px; /*  max 800  */
+    min-height: 300px; /*  max 600  */
+    background-color: var(--back-color);
+}
+header{
+    text-align: center;
+}
+#message-text
+{
+    text-align:right;
+    float:right;
+    color:var(--message-color);
+    margin: 0px;
+    padding: 0px;
+    opacity: 0;
+}
+.text
+{
+    color:var(--button-color);
+    margin: 2px; 
+    padding: 0;
+}
+.labeltext
+{
+    color:var(--button-color);
+    display: inline;
+    padding-left:5px;
+    bottom: 3px;
+    margin:1px;
+}
+.nav-button
+{
+    width: 130px;
+    min-height: 20px;
+    display: block;
+    margin: 5px;
+    border: none;
+    padding: 5px 10px;
+    background-color: var(--button-color);
+    color: var(--back-color);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--slider-color);
+}
+
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-thumb:window-inactive {
+    background: var(--slider-color);
+}
+.small-button
+{
+    display: inline;
+    min-width: 50px;
+    max-width: 60px;
+    min-height: 20px;
+    margin-left: 5px;
+    margin-right: 0px;
+}
+
+#nav-area
+{
+    height: 81%;
+    width: 25%;
+    position: fixed;
+    z-index:2;
+    max-width: 155px;
+}
+#write-area
+{
+    height: 81%;
+    width: 95%;
+    position: fixed;
+    z-index:1;  
+}
+#navbar
+{
+    overflow-y: auto;
+    list-style-type: none;
+    margin: 0; 
+    padding: 0;
+    max-height:250px; /* 1.5 x 3 */
+}
+
+#open-files-list
+{
+    list-style-type: none;
+    position:fixed;
+    top:35px;
+    left:125px;
+}
+.open-files-list-item
+{
+    display: inline;
+}
+.file-title-button
+{
+    max-width: 200px;
+    border: none;
+    padding-right:5px;
+    background-color:var(--button-color);
+    color: var(--text-color);
+    text-decoration: none;
+    z-index:2;
+    margin:0px;
+    border-radius:10px 2px 0px 0px;
+    padding-bottom: 4px;
+    
+}
+.close-button
+{
+    color: var(--back-color);
+    position: relative;
+    background-color: var(--button-color);
+    margin:0px;
+    padding-right: 5px;
+    padding-left: 3px;
+    margin-right: 2px;
+    padding-bottom: 4px;
+}
+#editor
+{
+    position: absolute;
+    right: 5px;
+    top: 22px;
+    min-width: 420px;
+    min-height: 230px;
+}
+#donate-button
+{
+    margin-top: 30px;
+}
+
+#change-filename-button
+{
+    margin:0px;
+    width: 20px; 
+    height: 20px;
+}
+
+#enabled-sites-text-area
+{  
+    max-width: 125px;
+    min-width: 125px;
+    min-height: 50px;
+    background-color:var(--textarea-color);
+    color:var(--button-color);
+    white-space: nowrap;
+    margin-left: 5px;
+    
+}
+.selection
+{
+    background-color:var(--dropdown-color);
+    color:var(--button-color);
+    min-width: 130px;
+    margin-left: 5px;
+}
+.checkbox
+{
+    display: inline;
+    background-color:var(--textarea-color);
+    color:var(--button-color);
+}
+#filename-textfield
+{
+    background-color:var(--textarea-color);
+    color:var(--button-color);
+    max-width: 125px;
+    margin-left: 5px;
+}
+#change-filename-textfield
+{
+    background-color:var(--textarea-color);
+    color:var(--button-color);
+    max-width: 125px;
+    margin-left: 5px;
+}
+
+#change-filename-label
+{
+    width : 100px;
+    overflow:hidden;
+    display:inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: white;
+}
+
+#active-label
+{
+    width : 100px;
+    overflow:hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#info-text
+{
+    position: absolute;
+    left: 180px;
+    top: 20px;
+    max-width: 415px;
+    max-height: 226px;
+    z-index: -5;
+}
+
+.division-line
+{
+    width: 130px;
+    background-color: var(--button-color);
+    clear:both; 
+    border-top: 1px solid var(--button-color);
+    margin: 10px 5px 10px;
+}
+.editor-menu-division-line
+{
+    margin: 5px 5px 5px;
+    height: 0px;
+    border-bottom: 1px solid var(--button-color);
+    border-style: dashed;
+}
+
+footer a
+{
+    position: fixed;
+    bottom: 0;
+    right: 5px;
+    color:var(--button-color);
+    z-index:-2;
+}
+
+footer .zoombutton
+{
+    position: fixed;
+    bottom: 2px;
+    background-color: var(--button-color);
+    color:var(--back-color);
+    z-index: 5;
+    font-weight: bold;
+    border: none;
+}
+
+#zoom-in-button
+{
+    left: 75px;
+}
+
+#zoom-out-button
+{
+    left: 12px;
+}
+
+#zoom-percentage-label
+{
+    position: fixed;
+    bottom: 2px;
+    left: 35px;
+    margin: 0;
+    margin-bottom: 3px;
+    padding: 0;
+    color: var(--button-color);
+    z-index: -2;
+}
