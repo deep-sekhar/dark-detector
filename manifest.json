@@ -1,0 +1,47 @@
+{
+    "manifest_version": 3,
+    "name": "Dark detector",
+    "description": "detect dark patterns",
+    "version": "1.0.0",
+    "icons": {
+      "128": "./icons/dark128.png",
+      "512": "./icons/dark512.png"
+    },
+    "action": {
+      "default_popup": "pop.html",
+      "default_icon": "./icons/dark128.png",
+      "web_accessible_resources": [
+        {
+          "resources": [
+            "js/*",
+            "icons/*",
+            "css/*"
+          ],
+          "matches": [
+            "https://www.amazon.in/*"
+          ]
+        }
+      ]
+    },
+  "content_scripts": [
+      {
+        "matches": [
+          "https://www.amazon.in/*",
+          "https://codeforces.com/",
+          "https://www.flipkart.com/",
+          "https://www.samsung.com/in/",
+          "https://ktj.in/"
+        ],
+        "js": [
+          "js/detector.js"
+        ],
+        "run_at": "document_end"
+      }
+    ],
+  "permissions": [
+      "storage",
+      "activeTab",
+      "scripting"
+  ]
+
+  }
