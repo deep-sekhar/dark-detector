@@ -16,6 +16,12 @@ Welcome to the Ethical Eagles Dark Pattern Detector repository! Our team from II
 - **Fake Review Identifier:** Scrutinizes social media reviews to identify and flag potential fake or manipulated reviews.
 
 ## Installation
+<p align="center">
+  <img src="./logo1.png" alt="animated" />
+</p>
+<p align="center">
+  <img src="./example.png" alt="animated" />
+</p>
 
 To install the extension, follow these steps:
 
