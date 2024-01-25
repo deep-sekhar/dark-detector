@@ -1,8 +1,8 @@
 # Ethical Eagles Dark Pattern Detector
 
-<div align="center">
-    ![Ethical Eagles Logo](./Logo.png)
-</div>
+<p align="center">
+  <img src="./Logo.png" alt="animated" />
+</p>
 
 ## Overview
 
