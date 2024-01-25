@@ -36,7 +36,7 @@ To install the extension, follow these steps:
    git clone https://github.com/deep-sekhar/dark-detector.git
    ```
 
-2. Open your browser and navigate to chrome://extensions/ (for Chrome) or about:addons (for Firefox).
+2. Open your browser and navigate to chrome://extensions/  (for Chrome).
 
 3. Enable "Developer mode."
 
