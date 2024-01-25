@@ -22,7 +22,7 @@ To install the extension, follow these steps:
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/ethical-eagles/dark-pattern-detector.git
+   git clone https://github.com/deep-sekhar/dark-detector.git
    ```
 
 2. Open your browser and navigate to chrome://extensions/ (for Chrome) or about:addons (for Firefox).
