@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "Dark detector prototype",
+    "message": "Dark Pattern detector",
     "description": "The name of the extension."
   },
   "extDescription": {
@@ -32,11 +32,11 @@
     "description": "Heading in the popup for the buttons to show individual pattern elements."
   },
   "headingFoundPatterns": {
-    "message": "Patterns found",
+    "message": "Patterns detected",
     "description": "Heading in the popup for the list of found patterns."
   },
   "headingSupportedPatterns": {
-    "message": "Types of dark patterns supported:",
+    "message": "Dark patterns supported:",
     "description": "Heading in the popup for the list of supported patterns."
   },
   "textMoreInformation": {
@@ -66,7 +66,7 @@
     "description": "Name of the countdown pattern."
   },
   "patternCountdown_infoUrl": {
-    "message": "https://dapde.de/en/dark-patterns-en/types-and-examples-en/druck2-en/",
+    "message": "https://dpbh2023.in/index.html",
     "description": "URL to the explanation of the countdown pattern on the dapde.de website."
   },
   "patternCountdown_info": {
@@ -78,7 +78,7 @@
     "description": "Name of the scarcity pattern."
   },
   "patternScarcity_infoUrl": {
-    "message": "https://dapde.de/en/dark-patterns-en/types-and-examples-en/druck2-en/",
+    "message": "https://dpbh2023.in/index.html",
     "description": "URL to the explanation of the scarcity pattern on the dapde.de website."
   },
   "patternScarcity_info": {
@@ -90,7 +90,7 @@
     "description": "Name of the social proof pattern."
   },
   "patternSocialProof_infoUrl": {
-    "message": "https://dapde.de/en/dark-patterns-en/types-and-examples-en/druck2-en/",
+    "message": "https://dpbh2023.in/index.html",
     "description": "URL to the explanation of the social proof pattern on the dapde.de website."
   },
   "patternSocialProof_info": {
@@ -102,7 +102,7 @@
     "description": "Name of the forced continuity pattern."
   },
   "patternForcedContinuity_infoUrl": {
-    "message": "https://dapde.de/en/dark-patterns-en/types-and-examples-en/operativer-zwang2-en/",
+    "message": "https://dpbh2023.in/index.html",
     "description": "URL to the explanation of the forced continuity pattern on the dapde.de website."
   },
   "patternForcedContinuity_info": {

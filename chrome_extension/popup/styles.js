@@ -23,7 +23,7 @@ export const sharedStyles = css`
     }
 
     * {
-        font-family: "Trebuchet MS", "Arial", sans-serif;
+        font-family: "Roboto", "Arial", sans-serif;
     }
 `;
 
@@ -40,10 +40,11 @@ export const patternLinkStyles = css`
 
 export const actionButtonStyles = css`
     div span {
-        color: violet;
+        color: #eb13bc;
         font-weight: bold;
         cursor: pointer;
         text-decoration: none;
+        font-size: 1rem;
     }
 
     div span:hover {
@@ -123,7 +124,7 @@ export const onOffSwitchStyles = css`
     .onoffswitch-inner:before {
         content: "${unsafeCSS(brw.i18n.getMessage("buttonOnState"))}";
         padding-left: 10px;
-        background-color: #34A7C1;
+        background-color: #369af7;
         color: #FFFFFF;
     }
 
@@ -137,14 +138,13 @@ export const onOffSwitchStyles = css`
 
     .onoffswitch-switch {
         display: block;
-        width: 18px;
+        width: 20px;
         margin: 6px;
         background: #FFFFFF;
         position: absolute;
         top: 0;
         bottom: 0;
         right: 56px;
-        border: 2px solid #000000;
         border-radius: 50px;
     }
 
@@ -162,7 +162,7 @@ export const onOffSwitchStyles = css`
         }
     
         .onoffswitch-inner:before {
-            background-color: #33bfde;
+            background-color: #369af7;
             color: #000000;
         }
     }

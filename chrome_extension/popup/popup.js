@@ -678,7 +678,7 @@ export class PopupFooter extends LitElement {
     render() {
         return html`
         <div>
-            ${brw.i18n.getMessage("textMoreInformation")}: <a href="https://dpbh2023.in/index.html" target="_blank">Dark team</a>.
+            ${brw.i18n.getMessage("textMoreInformation")}: <a href="https://dpbh2023.in/index.html" target="_blank"><br>Ethical Eagles</a>.
         </div>
       `;
     }
