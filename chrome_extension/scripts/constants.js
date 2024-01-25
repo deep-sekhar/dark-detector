@@ -244,25 +244,25 @@ export const patternConfig = {
                     // Return true if a match is found in the current text of the element,
                     // using multiple regular expressions for the forced proof continuity with German words.
                     // The regular expressions check if one of three combinations of a price specification
-                    // in INRo and the specification of a month is present.
+                    // in INR and the specification of a month is present.
                     // The previous state of the element is not used.
-                    if (/\d+(?:,\d{2})?\s*(?:INRo|€)\s*(?:(?:pro|im|\/)\s*Monat)?\s*(?:ab\s*(?:dem)?\s*\d+\.\s*Monat|nach\s*\d+\s*(?:Monaten|Tagen)|nach\s*(?:einem|1)\s*Monat)/i.test(node.innerText)) {
-                        // Example: "10,99 INRo pro Monat ab dem 12. Monat"
+                    if (/\d+(?:,\d{2})?\s*(?:INR|€)\s*(?:(?:pro|im|\/)\s*Monat)?\s*(?:ab\s*(?:dem)?\s*\d+\.\s*Monat|nach\s*\d+\s*(?:Monaten|Tagen)|nach\s*(?:einem|1)\s*Monat)/i.test(node.innerText)) {
+                        // Example: "10,99 INR pro Monat ab dem 12. Monat"
                         //          "11€ nach 30 Tagen"
                         return true;
                     }
-                    if (/(?:anschließend|danach)\s*\d+(?:,\d{2})?\s*(?:INRo|€)\s*(?:pro|im|\/)\s*Monat/i.test(node.innerText)) {
+                    if (/(?:anschließend|danach)\s*\d+(?:,\d{2})?\s*(?:INR|€)\s*(?:pro|im|\/)\s*Monat/i.test(node.innerText)) {
                         // Example: "anschließend 23,99€ pro Monat"
-                        //          "danach 10 INRo/Monat"
+                        //          "danach 10 INR/Monat"
                         return true;
                     }
-                    if (/\d+(?:,\d{2})?\s*(?:INRo|€)\s*(?:pro|im|\/)\s*Monat\s*(?:anschließend|danach)/i.test(node.innerText)) {
+                    if (/\d+(?:,\d{2})?\s*(?:INR|€)\s*(?:pro|im|\/)\s*Monat\s*(?:anschließend|danach)/i.test(node.innerText)) {
                         // Example: "23,99€ pro Monat anschließend"
-                        //          "10 INRo/Monat danach"
+                        //          "10 INR/Monat danach"
                         return true;
                     }
-                    if (/ab(?:\s*dem)?\s*\d+\.\s*Monat(?:\s*nur)?\s*\d+(?:,\d{2})?\s*(?:INRo|€)/i.test(node.innerText)) {
-                        // Example: "ab dem 24. Monat nur 23,99 INRo"
+                    if (/ab(?:\s*dem)?\s*\d+\.\s*Monat(?:\s*nur)?\s*\d+(?:,\d{2})?\s*(?:INR|€)/i.test(node.innerText)) {
+                        // Example: "ab dem 24. Monat nur 23,99 INR"
                         //          "ab 6. Monat 9,99€"
                         return true;
                     }
