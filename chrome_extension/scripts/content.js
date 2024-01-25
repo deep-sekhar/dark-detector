@@ -109,6 +109,7 @@ async function patternHighlighting(waitForChanges = false) {
 
     // Add pattern highlighter IDs to every element on the page.
     addPhidForEveryElement(document.body);
+    console.log("body", document.body)
 
     // Create a copy of the DOM that can be modified afterwards.
     let domCopyA = document.body.cloneNode(true);
