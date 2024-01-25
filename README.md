@@ -19,8 +19,14 @@ The dataset has 2,356 sentences, and their corresponding outputs indicating the 
 - **Scarcity Detector:** Identifies scarcity claims such as "Only 8 left" or "99% claimed" to protect consumers from false scarcity.
 - **Pricing Transparency:** Exposes hidden costs and recurring payment information, like "₹10.99/month after" and "after that ₹23.99 per month."
 - **Fake Review Identifier:** Scrutinizes social media reviews to identify and flag potential fake or manipulated reviews.
+- **Misinformation:** Detects and alerts users to instances of misinformation, ensuring they are informed accurately during their online interactions.
+- **Sneaking Obstruction:** Identify and mitigate sneaky tactics designed to hinder users' ability to make informed choices, empowering them to navigate websites freely and without obstruction.
+- **Forced Action:** Detects and highlights instances where users are coerced into taking actions they may not intend, allowing users to make decisions without undue influence or pressure
 
 ## Installation
+<p align="center">
+  <img src="./Extension.png" alt="animated" />
+</p>
 <p align="center">
   <img src="./logo1.png" alt="animated" />
 </p>
@@ -56,11 +62,11 @@ To install the extension, follow these steps:
 
 ## Meet the Team
 
-- **Ayushi Saha**
-- **Daksh Kochhar**
-- **Deep Sekhar Ghosh**
-- **Sanskar Gupta**
-- **Souvik Mondal**
+- **[Ayushi Saha](https://github.com/Code-2k2)**
+- **[Daksh Kochhar](https://github.com/17AtGithub)**
+- **[Deep Sekhar Ghosh](https://github.com/deep-sekhar)**
+- **[Sanskar Gupta](https://github.com/sanskar12k)**
+- **[Souvik Mondal](https://github.com/souvikm2002)**
 
 ## License
 
