@@ -41,6 +41,16 @@ export const patternConfig = {
             className: "countdown",
             detectionFunctions: [
                 function (node, nodeOld) {
+                    // Return true if a match is found in the current text of the element for the timer pattern.
+                    // The previous state of the element is not used.
+                
+                    // Regular expression to match the timer pattern.
+                    const timerRegex = /\b\d{1,2}h\s*:\s*\d{1,2}m\s*:\s*\d{1,2}s\b/i;
+                
+                    // Check if the text contains the timer pattern.
+                    return timerRegex.test(node.innerText);
+                },                
+                function (node, nodeOld) {
                     // Countdowns should only be identified as such if they are actively running and not static.
                     // Therefore, it is necessary to check first if there is an old state of the element and if the text in it has changed.
                     if (nodeOld && node.innerText != nodeOld.innerText) {
@@ -204,6 +214,64 @@ export const patternConfig = {
             name: brw.i18n.getMessage("patternForcedContinuity_name"),
             className: "forced-continuity",
             detectionFunctions: [
+                function (node, nodeOld) {
+                    // Return true if a match is found in the current text of the element,
+                    // using multiple regular expressions for the forced proof continuity with English words.
+                    // The regular expressions check if one of three combinations of a price specification
+                    // in euro, Dollar or Pound and the specification of a month is present.
+                    // The previous state of the element is not used.
+                    if (/(?:(?:€|INR|GBP|£|\₹|INR)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:rupees?|€|INR|GBP|£|pounds?(?:\s*sterling)?|\₹|INR|rupees?))\s*(?:(?:(?:per|\/|a)\s*month)|(?:p|\/)m)\s*(?:after|from\s*(?:month|day)\s*\d+)/i.test(node.innerText)) {
+                        // Example: "₹10.99/month after"
+                        //          "11 GBP a month from month 4"
+                        return true;
+                    }
+                    if (/(?:(?:€|INR|GBP|£|\₹|INR)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:rupees?|€|INR|GBP|£|pounds?(?:\s*sterling)?|\₹|INR|rupees?))\s*(?:after\s*(?:the)?\s*\d+(?:th|nd|rd|th)?\s*(?:months?|days?)|from\s*(?:month|day)\s*\d+)/i.test(node.innerText)) {
+                        // Example: "₹10.99 after 12 months"
+                        //          "11 GBP from month 4"
+                        return true;
+                    }
+                    if (/(?:after\s*that|then|afterwards|subsequently)\s*(?:(?:€|INR|GBP|£|\₹|INR)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:rupees?|€|INR|GBP|£|pounds?(?:\s*sterling)?|\₹|INR|rupees?))\s*(?:(?:(?:per|\/|a)\s*month)|(?:p|\/)m)/i.test(node.innerText)) {
+                        // Example: "after that ₹23.99 per month"
+                        //          "then GBP 10pm"
+                        return true;
+                    }
+                    if (/after\s*(?:the)?\s*\d+(?:th|nd|rd|th)?\s*months?\s*(?:only|just)?\s*(?:(?:€|INR|GBP|£|\₹|INR)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:rupees?|€|INR|GBP|£|pounds?(?:\s*sterling)?|\₹|INR|rupees?))/i.test(node.innerText)) {
+                        // Example: "after the 24th months only €23.99"
+                        //          "after 6 months ₹10"
+                        return true;
+                    }
+                    // Return `false` if no regular expression matches.
+                    return false;
+                },
+                function (node, nodeOld) {
+                    // Return true if a match is found in the current text of the element,
+                    // using multiple regular expressions for the forced proof continuity with German words.
+                    // The regular expressions check if one of three combinations of a price specification
+                    // in INR and the specification of a month is present.
+                    // The previous state of the element is not used.
+                    if (/\d+(?:,\d{2})?\s*(?:INR|€)\s*(?:(?:pro|im|\/)\s*Monat)?\s*(?:ab\s*(?:dem)?\s*\d+\.\s*Monat|nach\s*\d+\s*(?:Monaten|Tagen)|nach\s*(?:einem|1)\s*Monat)/i.test(node.innerText)) {
+                        // Example: "10,99 INR pro Monat ab dem 12. Monat"
+                        //          "11€ nach 30 Tagen"
+                        return true;
+                    }
+                    if (/(?:anschließend|danach)\s*\d+(?:,\d{2})?\s*(?:INR|€)\s*(?:pro|im|\/)\s*Monat/i.test(node.innerText)) {
+                        // Example: "anschließend 23,99€ pro Monat"
+                        //          "danach 10 INR/Monat"
+                        return true;
+                    }
+                    if (/\d+(?:,\d{2})?\s*(?:INR|€)\s*(?:pro|im|\/)\s*Monat\s*(?:anschließend|danach)/i.test(node.innerText)) {
+                        // Example: "23,99€ pro Monat anschließend"
+                        //          "10 INR/Monat danach"
+                        return true;
+                    }
+                    if (/ab(?:\s*dem)?\s*\d+\.\s*Monat(?:\s*nur)?\s*\d+(?:,\d{2})?\s*(?:INR|€)/i.test(node.innerText)) {
+                        // Example: "ab dem 24. Monat nur 23,99 INR"
+                        //          "ab 6. Monat 9,99€"
+                        return true;
+                    }
+                    // Return `false` if no regular expression matches.
+                    return false;
+                },
                 function (node, nodeOld) {
                     // Return true if a match is found in the current text of the element,
                     // using multiple regular expressions for forced proof continuity with English words.

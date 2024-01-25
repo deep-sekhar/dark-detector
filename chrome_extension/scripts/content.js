@@ -308,7 +308,7 @@ async function findPatternDeep(node, domOld) {
     }else{
         // check using the model if length of text is greater than 30 and it has numbers
         // if node has furthur children then dont check
-        if(node.children.length == 0 && node.textContent.length > 20 && node.textContent.match(/\d+/g) && node.textContent.length < 100)
+        if(node.children.length == 0 && node.textContent.length > 20 && node.textContent.match(/\d+/g) && node.textContent.length < 40000)
         {
             // make prediction request
             const prediction = makePredictionRequest(node.textContent);
