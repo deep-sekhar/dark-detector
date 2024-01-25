@@ -109,6 +109,42 @@
     "message": "The Forced Continuity pattern automatically renews free or low-cost trial subscriptions - but for a fee or at a higher price. The design trick is that the order form visually suggests that there is no charge and conceals the (automatic) follow-up costs.",
     "description": "Brief explanation of the forced continuity Pattern."
   },
+  "patternSneaking_name": {
+    "message": "Sneaking",
+    "description": "Name of the sneaking pattern."
+},
+"patternSneaking_infoUrl": {
+    "message": "https://dpbh2023.in/index.html",
+    "description": "URL to the explanation of the sneaking pattern on the dapde.de website."
+},
+"patternSneaking_info": {
+    "message": "Description of the sneaking pattern.",
+    "description": "Brief explanation of the sneaking pattern."
+},
+"patternObstruction_name": {
+  "message": "Obstruction",
+  "description": "Name of the obstruction pattern."
+},
+"patternObstruction_infoUrl": {
+  "message": "https://dpbh2023.in/index.html",
+  "description": "URL to the explanation of the obstruction pattern on the dapde.de website."
+},
+"patternObstruction_info": {
+  "message": "Description of the obstruction pattern.",
+  "description": "Brief explanation of the obstruction pattern."
+},
+"patternMisdirection_name": {
+  "message": "Misdirection",
+  "description": "Name of the misdirection pattern."
+},
+"patternMisdirection_infoUrl": {
+  "message": "https://dpbh2023.in/index.html",
+  "description": "URL to the explanation of the misdirection pattern on the dapde.de website."
+},
+"patternMisdirection_info": {
+  "message": "Description of the misdirection pattern.",
+  "description": "Brief explanation of the misdirection pattern."
+},
   "showPatternState": {
     "message": "$CURRENT$ of $TOTAL$",
     "description": "Display the number of the current pattern in the popup for the 'Show patterns' function.",

@@ -148,16 +148,6 @@ export const patternConfig = {
                     // Example: "10 pieces available"
                     //          "99% claimed"
                     return /\d+\s*(?:\%|pieces?|pcs\.?|pc\.?|ct\.?|items?)?\s*(?:available|sold|claimed|redeemed|left)|(?:last|final)\s*(?:article|item)/i.test(node.innerText);
-                },
-                function (node, nodeOld) {
-                    // Return true if a match is found in the current text of the element,
-                    // using a regular expression for the scarcity pattern with German words.
-                    // The regular expression checks whether a number is followed by one of several keywords
-                    // or alternatively if the word group 'last article' (`letzter\s*Artikel`) is present.
-                    // The previous state of the element is not used.
-                    // Example: "10 Stück verfügbar"
-                    //          "99% eingelöst"
-                    return /\d+\s*(?:\%|stücke?|stk\.?)?\s*(?:verfügbar|verkauft|eingelöst)|letzter\s*Artikel/i.test(node.innerText);
                 }
             ],
             infoUrl: brw.i18n.getMessage("patternScarcity_infoUrl"),
@@ -188,13 +178,16 @@ export const patternConfig = {
                 },
                 function (node, nodeOld) {
                     // Return true if a match is found in the current text of the element,
-                    // using a regular expression for the social proof pattern with German words.
+                    // using a regular expression for the social proof pattern with English words.
                     // The regular expression checks whether a number is followed by a combination of different keywords.
                     // The previous state of the element is not used.
-                    // Example: "5 andere Kunden kauften auch diesen Artikel"
-                    //          "6 Käufer*innen haben folgende Produkte [mit 5 Sternen bewertet]"
-                    return /\d+\s*(?:andere)?\s*(?:Kunden?|Käufer|Besteller|Nutzer|Leute|Person(?:en)?)(?:(?:\s*\/\s*)?[_\-\*]?innen)?\s*(?:(?:kauften|bestellten|haben)\s*(?:auch|ebenfalls)?|(?:bewerteten|rezensierten))\s*(?:diese[ns]?|(?:den|die|das)?\s*folgenden?)\s*(?:Produkte?|Artikel)/i.test(node.innerText);
+                
+                    const socialProofRegex = /\d+\s*(?:other)?\s*(?:customers?|clients?|buyers?|users?|shoppers?|purchasers?|people)\s*(?:have\s+)?\s*(?:(?:also\s*)?(?:bought|purchased|ordered)|(?:rated|reviewed))\s*(?:this|the\s*following)\s*(?:product|article|item)s?/i;
+                
+                    // Check if the text contains the social proof pattern.
+                    return socialProofRegex.test(node.innerText);
                 }
+                
             ],
             infoUrl: brw.i18n.getMessage("patternSocialProof_infoUrl"),
             info: brw.i18n.getMessage("patternSocialProof_info"),
@@ -213,69 +206,136 @@ export const patternConfig = {
             detectionFunctions: [
                 function (node, nodeOld) {
                     // Return true if a match is found in the current text of the element,
-                    // using multiple regular expressions for the forced proof continuity with English words.
-                    // The regular expressions check if one of three combinations of a price specification
-                    // in euro, Dollar or Pound and the specification of a month is present.
+                    // using multiple regular expressions for forced proof continuity with English words.
+                    // The regular expressions check for combinations of a price specification
+                    // in Euro, Dollar, or Pound and the specification of a month.
                     // The previous state of the element is not used.
-                    if (/(?:(?:€|INR|GBP|£|\₹|INR)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:rupees?|€|INR|GBP|£|pounds?(?:\s*sterling)?|\₹|INR|rupees?))\s*(?:(?:(?:per|\/|a)\s*month)|(?:p|\/)m)\s*(?:after|from\s*(?:month|day)\s*\d+)/i.test(node.innerText)) {
-                        // Example: "₹10.99/month after"
-                        //          "11 GBP a month from month 4"
-                        return true;
-                    }
-                    if (/(?:(?:€|INR|GBP|£|\₹|INR)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:rupees?|€|INR|GBP|£|pounds?(?:\s*sterling)?|\₹|INR|rupees?))\s*(?:after\s*(?:the)?\s*\d+(?:th|nd|rd|th)?\s*(?:months?|days?)|from\s*(?:month|day)\s*\d+)/i.test(node.innerText)) {
-                        // Example: "₹10.99 after 12 months"
-                        //          "11 GBP from month 4"
-                        return true;
-                    }
-                    if (/(?:after\s*that|then|afterwards|subsequently)\s*(?:(?:€|INR|GBP|£|\₹|INR)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:rupees?|€|INR|GBP|£|pounds?(?:\s*sterling)?|\₹|INR|rupees?))\s*(?:(?:(?:per|\/|a)\s*month)|(?:p|\/)m)/i.test(node.innerText)) {
-                        // Example: "after that ₹23.99 per month"
-                        //          "then GBP 10pm"
-                        return true;
-                    }
-                    if (/after\s*(?:the)?\s*\d+(?:th|nd|rd|th)?\s*months?\s*(?:only|just)?\s*(?:(?:€|INR|GBP|£|\₹|INR)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:rupees?|€|INR|GBP|£|pounds?(?:\s*sterling)?|\₹|INR|rupees?))/i.test(node.innerText)) {
-                        // Example: "after the 24th months only €23.99"
-                        //          "after 6 months ₹10"
-                        return true;
-                    }
-                    // Return `false` if no regular expression matches.
-                    return false;
-                },
+                
+                    const currencyRegex = /(?:€|\$|£|\₹|INR)/i;
+                    const priceRegex = /\d+(?:\.\d{2})?/;
+                    const monthRegex = /\d+(?:th|nd|rd|th)?(?:\s*months?|days?)/i;
+                
+                    const continuityRegex = new RegExp(
+                        `(?:(?:${currencyRegex.source})\\s*${priceRegex.source}|${priceRegex.source}\\s*(?:rupees?|${currencyRegex.source}))\\s*(?:(?:(?:per|\\/|a)\\s*month)|(?:p|\\/)m)\\s*(?:after|from\\s*(?:month|day)\\s*${monthRegex.source})`,
+                        'i'
+                    );
+                
+                    // Check if the text contains the forced continuity pattern.
+                    return continuityRegex.test(node.innerText);
+                },                
                 function (node, nodeOld) {
                     // Return true if a match is found in the current text of the element,
-                    // using multiple regular expressions for the forced proof continuity with German words.
+                    // using multiple regular expressions for the forced proof continuity with English words.
                     // The regular expressions check if one of three combinations of a price specification
-                    // in INR and the specification of a month is present.
+                    // in euro, Dollar, or Pound and the specification of a month is present.
                     // The previous state of the element is not used.
-                    if (/\d+(?:,\d{2})?\s*(?:INR|€)\s*(?:(?:pro|im|\/)\s*Monat)?\s*(?:ab\s*(?:dem)?\s*\d+\.\s*Monat|nach\s*\d+\s*(?:Monaten|Tagen)|nach\s*(?:einem|1)\s*Monat)/i.test(node.innerText)) {
-                        // Example: "10,99 INR pro Monat ab dem 12. Monat"
-                        //          "11€ nach 30 Tagen"
+                    if (/(?:(?:€|\$|£)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:dollars?|€|£|pounds?(?:\s*sterling)?))\s*(?:(?:(?:per|\/|a)\s*month)|(?:p|\/)m)\s*(?:after|from\s*(?:month|day)\s*\d+)/i.test(node.innerText)) {
+                        // Example: "$10.99/month after"
+                        //          "£11 a month from month 4"
                         return true;
                     }
-                    if (/(?:anschließend|danach)\s*\d+(?:,\d{2})?\s*(?:INR|€)\s*(?:pro|im|\/)\s*Monat/i.test(node.innerText)) {
-                        // Example: "anschließend 23,99€ pro Monat"
-                        //          "danach 10 INR/Monat"
+                    if (/(?:(?:€|\$|£)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:dollars?|€|£|pounds?(?:\s*sterling)?))\s*(?:after\s*(?:the)?\s*\d+(?:th|nd|rd|th)?\s*(?:months?|days?)|from\s*(?:month|day)\s*\d+)/i.test(node.innerText)) {
+                        // Example: "$10.99 after 12 months"
+                        //          "£11 from month 4"
                         return true;
                     }
-                    if (/\d+(?:,\d{2})?\s*(?:INR|€)\s*(?:pro|im|\/)\s*Monat\s*(?:anschließend|danach)/i.test(node.innerText)) {
-                        // Example: "23,99€ pro Monat anschließend"
-                        //          "10 INR/Monat danach"
+                    if (/(?:after\s*that|then|afterwards|subsequently)\s*(?:(?:€|\$|£)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:dollars?|€|£|pounds?(?:\s*sterling)?))\s*(?:(?:(?:per|\/|a)\s*month)|(?:p|\/)m)/i.test(node.innerText)) {
+                        // Example: "after that $23.99 per month"
+                        //          "then £10pm"
                         return true;
                     }
-                    if (/ab(?:\s*dem)?\s*\d+\.\s*Monat(?:\s*nur)?\s*\d+(?:,\d{2})?\s*(?:INR|€)/i.test(node.innerText)) {
-                        // Example: "ab dem 24. Monat nur 23,99 INR"
-                        //          "ab 6. Monat 9,99€"
+                    if (/after\s*(?:the)?\s*\d+(?:th|nd|rd|th)?\s*months?\s*(?:only|just)?\s*(?:(?:€|\$|£)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:dollars?|€|£|pounds?(?:\s*sterling)?))/i.test(node.innerText)) {
+                        // Example: "after the 24th months only $23.99"
+                        //          "after 6 months £10"
                         return true;
                     }
                     // Return `false` if no regular expression matches.
                     return false;
                 }
+                
             ],
             infoUrl: brw.i18n.getMessage("patternForcedContinuity_infoUrl"),
             info: brw.i18n.getMessage("patternForcedContinuity_info"),
             languages: [
                 "en"
             ]
-        }
+        },
+        {
+            /**
+             * Sneaking Pattern.
+             * Description of the sneaking pattern.
+             * Brief explanation of the sneaking pattern.
+             */
+            name: brw.i18n.getMessage("patternSneaking_name"),
+            className: "sneaking",
+            detectionFunctions: [
+                function (node, nodeOld) {
+                    // Return true if a match is found in the current text of the element,
+                    // using regular expressions for detecting various sneaking patterns.
+                    // The previous state of the element is not used.
+                
+                    // Check for keywords related to sneaking patterns in English.
+                    const sneakingRegex = /(?:hidden|trial period|free trial|auto[-\s]?renew|renewal|recurring|subscription|membership)[\w\s]*(?:fee|charge|cost|price)?/i;
+                
+                    // Check if the text contains the sneaking pattern keywords.
+                    return sneakingRegex.test(node.innerText);
+                }
+                
+            ],
+            infoUrl: brw.i18n.getMessage("patternSneaking_infoUrl"),
+            info: brw.i18n.getMessage("patternSneaking_info"),
+            languages: ["en"]
+        },
+        {
+            /**
+             * Obstruction Pattern.
+             * Description of the obstruction pattern.
+             * Brief explanation of the obstruction pattern.
+             */
+            name: brw.i18n.getMessage("patternObstruction_name"),
+            className: "obstruction",
+            detectionFunctions: [
+                function (node, nodeOld) {
+                    // Return true if a match is found in the current text of the element,
+                    // using regular expressions for detecting various obstruction patterns.
+                    // The previous state of the element is not used.
+                
+                    // Check for keywords related to obstruction patterns in English.
+                    const obstructionRegex = /(?:blocked access|restricted access|limited access|access denied|paywall|authorization required|premium content|members only|exclusive content|obstruction|restricted content)[\w\s]*(?:subscribe|payment|membership|access|unlock|fee|charge|cost|price)?/i;
+                
+                    // Check if the text contains the obstruction pattern keywords.
+                    return obstructionRegex.test(node.innerText);
+                }
+            ],
+            infoUrl: brw.i18n.getMessage("patternObstruction_infoUrl"),
+            info: brw.i18n.getMessage("patternObstruction_info"),
+            languages: ["en"]
+        },
+        {
+            /**
+             * Misdirection Pattern.
+             * Description of the misdirection pattern.
+             * Brief explanation of the misdirection pattern.
+             */
+            name: brw.i18n.getMessage("patternMisdirection_name"),
+            className: "misdirection",
+            detectionFunctions: [
+                function (node, nodeOld) {
+                    // Return true if a match is found in the current text of the element,
+                    // indicating a misdirection pattern related to expressing a preference for paying the full amount.
+                    // The previous state of the element is not used.
+                
+                    // Check if the text contains phrases indicating a preference for paying the full amount.
+                    const misdirectionRegex = /\b(?:no|not|don't)\s*(?:want|like|prefer)\s*to\s*pay\s*full\b/i;
+                
+                    // Check if the text contains the misdirection pattern keywords.
+                    return misdirectionRegex.test(node.innerText);
+                }                
+            ],
+            infoUrl: brw.i18n.getMessage("patternMisdirection_infoUrl"),
+            info: brw.i18n.getMessage("patternMisdirection_info"),
+            languages: ["en"]
+        },
     ]
 }
 

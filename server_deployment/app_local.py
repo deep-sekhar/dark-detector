@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from flask_cors import CORS  # Import the CORS module
+
 
 # Load the model and tokenizer
 model = AutoModelForSequenceClassification.from_pretrained("sekhharr/hackathon_v1")
@@ -25,6 +27,7 @@ id2label = {
 label2id = {label: idx for idx, label in id2label.items()}
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -42,6 +45,8 @@ def predict():
     predicted_class_index = torch.argmax(res.logits).item()
     predicted_label = id2label.get(predicted_class_index, f'Unknown Label ({predicted_class_index})')
 
+    # print the predicted label
+    # print(predicted_labesl)
     # Return predictions as JSON
     return jsonify({
         'text': text,
@@ -50,4 +55,5 @@ def predict():
     })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    # Run the Flask application on localhost:5000
+    app.run()
