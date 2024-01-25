@@ -1,6 +1,8 @@
 # Ethical Eagles Dark Pattern Detector
 
-![Ethical Eagles Logo](./Logo.png)
+<div align="center">
+    ![Ethical Eagles Logo](./Logo.png)
+</div>
 
 ## Overview
 
@@ -58,3 +60,5 @@ This project is licensed under the MIT License - see the [MIT](https://chooseali
 We would like to express our gratitude to the open-source community for their valuable contributions and support.
 
 Happy ethical shopping! 🛍️
+
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
