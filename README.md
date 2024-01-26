@@ -50,6 +50,9 @@ To install the extension, follow these steps:
 
 5. The Ethical Eagles Dark Pattern Detector extension is now installed!
 
+6. For the model server, you need to log in to your Hugging face account from cli and run the flask app using "python app_local.py" command.
+
+7. Now you can use the extension to detect dark patterns on e-commerce websites!
 ## Usage
 
 1. Visit an e-commerce website.
