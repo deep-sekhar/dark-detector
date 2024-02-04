@@ -104,7 +104,7 @@ async function patternHighlighting(waitForChanges = false) {
 
     // Wait 2000 milliseconds for subsequent changes after the observer has detected a change.
     if (waitForChanges === true) {
-        await new Promise(resolve => { setTimeout(resolve, 20000000) });
+        await new Promise(resolve => { setTimeout(resolve, 2000) });
     }
 
     // Add pattern highlighter IDs to every element on the page.
@@ -120,7 +120,7 @@ async function patternHighlighting(waitForChanges = false) {
 
     // Wait about 2 seconds for changes to elements to occur.
     // An example of an expected change is a countdown that counts down every second.
-    await new Promise(resolve => { setTimeout(resolve, 2000) });
+    await new Promise(resolve => { setTimeout(resolve, 4000) });
 
     // Add pattern highlighter IDs to every element on the page.
     addPhidForEveryElement(document.body);
@@ -281,7 +281,7 @@ async function findPatternDeep(node, domOld) {
     // Check if the node represents one of the patterns.
     let foundPattern = findPatterInNode(node, nodeOld);
     // print the text content of the node to the console
-    console.log(node.textContent)
+    // console.log(node.textContent)
 
     // If a pattern is detected, add appropriate classes to the element
     // and remove it from the DOM for the further pattern search.
@@ -312,7 +312,7 @@ async function findPatternDeep(node, domOld) {
         {
             // make prediction request
             const prediction = makePredictionRequest(node.textContent);
-            console.log("prediction for text: ", node.textContent, " is: ", prediction);
+            // console.log("prediction for text: ", node.textContent, " is: ", prediction);
             if(prediction.predicted_class_index != 1){
                 // Find the element in the original DOM.
                 let elem = getElementByPhid(document, node.dataset.phid);
@@ -431,6 +431,7 @@ function getPatternsResults() {
 function sendResults() {
     // Create the result object with all information and counts.
     let results = getPatternsResults();
+    console.log("res: ", results)
 
     // Send the object to all other extension scripts. Do nothing in the event of a reply.
     brw.runtime.sendMessage(
