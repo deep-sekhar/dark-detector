@@ -203,7 +203,7 @@ function getElementByPhid(dom, id) {
  * Removes all elements on the `tagBlacklist` from the specified DOM tree.
  * @param {Node} dom The DOM tree from which the elements will be removed.
  */
-async function removeBlacklistNodes(dom) {
+function removeBlacklistNodes(dom) {
     // Iterate over all elements on the page with a tag from the `tagBlacklist`.
     for (const elem of dom.querySelectorAll(constants.tagBlacklist.join(","))) {
         // Remove the element from the DOM.
