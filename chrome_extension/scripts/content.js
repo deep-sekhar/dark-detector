@@ -203,11 +203,42 @@ function getElementByPhid(dom, id) {
  * Removes all elements on the `tagBlacklist` from the specified DOM tree.
  * @param {Node} dom The DOM tree from which the elements will be removed.
  */
-function removeBlacklistNodes(dom) {
+async function removeBlacklistNodes(dom) {
     // Iterate over all elements on the page with a tag from the `tagBlacklist`.
     for (const elem of dom.querySelectorAll(constants.tagBlacklist.join(","))) {
         // Remove the element from the DOM.
         elem.remove();
+    }
+
+    // Traverse all child nodes of the provided DOM.
+    for (const node of dom.querySelectorAll('*')) {
+        // Check if the node is an image tag.
+        if (node.tagName === 'IMG') {
+            // Extract the image source URL
+            const imageUrl = node.src;
+        
+            // Make a POST request to the API endpoint running on localhost:5000/extract_image
+            fetch('http://localhost:5000/extract_image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image_link: imageUrl })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Extracted text from the image
+                const text = data.extracted_text;
+        
+                // Replace the image node with a text node containing the extracted text
+                const textNode = document.createTextNode(text);
+                node.parentNode.replaceChild(textNode, node);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        
     }
 }
 
@@ -272,12 +303,40 @@ async function makePredictionRequest(text) {
 async function findPatternDeep(node, domOld) {
     // Iterate over all child nodes of the provided DOM node.
     for (const child of node.children) {
+
+        // if image tag is present, then extract text from the image
+        // if (child.tagName === 'IMG') {
+        //     // Extract the image source URL
+        //     const imageUrl = child.src;
+        
+        //     // Make a POST request to the API endpoint running on localhost:5000/extract_image
+        //     fetch('http://localhost:5000/extract_image', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({ image_link: imageUrl })
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // Extracted text from the image
+        //         const text = data.extracted_text;
+        //         // Replace the child node with a text node containing the extracted text
+        //         const textNode = document.createTextNode(text);
+        //         child.parentNode.replaceChild(textNode, child);
+        //     })
+        //     .catch(error => {
+        //         console.error('Error:', error);
+        //     });
+        // }        
+
         // Execute the function recursively on each child node and wait for the result.
         await findPatternDeep(child, domOld);
     }
 
     // Extract the previous state of the node from the old DOM. Is `null` if the node did not exist yet.
     let nodeOld = getElementByPhid(domOld, node.dataset.phid);
+
     // Check if the node represents one of the patterns.
     let foundPattern = findPatterInNode(node, nodeOld);
     // print the text content of the node to the console
@@ -313,7 +372,7 @@ async function findPatternDeep(node, domOld) {
             // make prediction request
             const prediction = makePredictionRequest(node.textContent);
             // console.log("prediction for text: ", node.textContent, " is: ", prediction);
-            if(prediction.predicted_class_index != 1){
+            if(prediction.predicted_class_index != 0){
                 // Find the element in the original DOM.
                 let elem = getElementByPhid(document, node.dataset.phid);
                 // Check if the element still exists.

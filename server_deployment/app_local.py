@@ -2,6 +2,10 @@ from flask import Flask, request, jsonify
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from flask_cors import CORS  # Import the CORS module
+from flask import Flask, request, jsonify
+from PIL import Image
+import pytesseract
+import requests  # Import the requests module
 
 
 # Load the model and tokenizer
@@ -53,6 +57,29 @@ def predict():
         'predicted_label': predicted_label,
         'predicted_class_index': predicted_class_index
     })
+
+# Endpoint to extract text from the image
+@app.route('/extract_image', methods=['POST'])
+def extract_image():
+    # Get the image link from the request
+    image_link = request.json.get('image_link', None)
+
+    # Check if image link is provided
+    if not image_link:
+        return jsonify({'error': 'Image link is missing'}), 400
+
+    try:
+        # Open the image from the provided link
+        img = Image.open(requests.get(image_link, stream=True).raw)
+
+        # Use Tesseract OCR to extract text from the image
+        extracted_text = pytesseract.image_to_string(img)
+        # print(extracted_text)
+        # Return the extracted text as response
+        return jsonify({'extracted_text': extracted_text}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     # Run the Flask application on localhost:5000
