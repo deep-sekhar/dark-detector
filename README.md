@@ -1,7 +1,7 @@
 # Ethical Eagles Dark Pattern Detector
 
 <p align="center">
-  <img src="./Logo.png" alt="animated" />
+  <img src="./images/Logo.png" alt="animated" />
 </p>
 
 ## Overview
@@ -25,13 +25,13 @@ The dataset has 2,356 sentences, and their corresponding outputs indicating the 
 
 ## Installation
 <p align="center">
-  <img src="./Extension.png" alt="animated" />
+  <img src="./images/Extension.png" alt="animated" />
 </p>
 <p align="center">
-  <img src="./logo1.png" alt="animated" />
+  <img src="./images/logo1.png" alt="animated" />
 </p>
 <p align="center">
-  <img src="./example.png" alt="animated" />
+  <img src="./images/example.png" alt="animated" />
 </p>
 
 To install the extension, follow these steps:
