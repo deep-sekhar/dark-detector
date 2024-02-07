@@ -138,7 +138,7 @@ async function patternHighlighting(waitForChanges = false) {
     // If elements are identified as patterns, respective classes are added to them.
     // findPatternDeep(domCopyB, domCopyA);
     // wait for pattern recognition to finish
-    findPatternDeep(domCopyB, domCopyA);
+    await findPatternDeep(domCopyB, domCopyA);
 
     // Destroy both DOM copies so that they can be removed from memory.
     domCopyA.replaceChildren();
@@ -326,8 +326,9 @@ async function findPatternDeep(node, domOld) {
                 // Extracted text from the image
                 const text = data.extracted_text;
 
+                // console.log("url:",  node.src, "text:", text)
                 // Replace the image node with extracted text as node.textContent
-                node.textContent = text;
+                // node.textContent = text;
 
                 // After replacing the image with extracted text, you can pass it to the next condition for further tasks
                 // Check if the text length is greater than 20, contains numbers, and is within a certain length
@@ -344,6 +345,10 @@ async function findPatternDeep(node, domOld) {
                                 constants.patternDetectedClassName,
                                 constants.extensionClassPrefix + prediction.predicted_label
                             );
+                        }
+                        // Remove the previous state of the node, if it exists.
+                        if (nodeOld) {
+                            nodeOld.remove();
                         }
                         // Remove the node from the DOM
                         node.remove();

@@ -50,17 +50,29 @@ To install the extension, follow these steps:
 
 5. The Ethical Eagles Dark Pattern Detector extension is now installed!
 
-6. For the model server, you need to log in to your Hugging face account from cli and run the flask app using "python app_local.py" command.
-
-7. Now you can use the extension to detect dark patterns on e-commerce websites!
-
-  Note: For running the model server, you need to have the following libraries installed:
+6. Before running the model server, you need to have the following libraries installed:
   ```bash
   pip install flask
   pip install transformers
   pip install torch
   pip install flask_cors
+  pip install pytesseract
   ```
+Also, install tesseract-ocr from the following link:
+  ```bash
+  https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.3.20231005.exe
+  ```
+
+7. Create a .env file in the root directory of the project and add the following lines:
+  ```bash
+  TESSERACT_PATH = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+  ```
+Check if the path is same for your system. If not, change the path accordingly.
+
+8. For the model server, you need to log in to your Hugging face account from cli and run the flask app using "python app_local.py" command.
+
+9. Now you can use the extension to detect dark patterns on e-commerce websites!
+
 ## Usage
 
 1. Visit an e-commerce website.
