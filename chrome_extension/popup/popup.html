@@ -5,6 +5,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+               ::-webkit-scrollbar {
+            width: 5px;
+            /* Set the width of the scrollbar */
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            /* Color of the track */
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            /* Color of the handle */
+            border-radius: 5px;
+            /* Make the handle rounded */
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            /* Color of the handle on hover */
+        }
+
         body {
             margin: 8px;
             padding: 8px;
@@ -12,8 +37,15 @@
             box-sizing: border-box;
             text-align: center;
             font-size: 0.8em;
-            border: 2px solid rgb(250, 13, 13);
+            background-color: transparent;
+            border: none;
+            /* Remove the border */
             border-radius: 1rem;
+            box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.1),
+                -8px -8px 16px 0 rgba(255, 255, 255, 0.5),
+                inset 4px 4px 8px rgba(0, 0, 0, 0.1),
+                inset -4px -4px 8px rgba(255, 255, 255, 0.5);
+            /* Add neumorphic box-shadow with inset shadow */
         }
 
         @media (prefers-color-scheme: dark) {
@@ -23,12 +55,69 @@
             }
         }
 
+        /* Add neumorphic design to the container */
+        .container {
+            width: 300px;
+            /* Set width of your extension */
+            height: 200px;
+            /* Set height of your extension */
+            border-radius: 20px;
+            /* Adjust border radius as needed */
+            background: linear-gradient(145deg, #e0e0e0, #f5f5f5);
+            /* Gradient background */
+            margin: 0 auto;
+            /* Center the container horizontally */
+            margin-top: 16px;
+            /* Adjust margin top as needed */
+        }
+                /* Neumorphic power button style */
+        .power-button {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #e0e0e0, #f5f5f5);
+            /* Gradient background */
+            box-shadow: 6px 6px 12px #c9c9c9, 
+                        -6px -6px 12px #ffffff; /* Neumorphic box-shadow */
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition for smoother animation */
+            position: relative;
+        }
+
+        .power-button:hover {
+            transform: scale(1.05); /* Scale up the button on hover */
+        }
+
+        .power-button:active {
+            transform: scale(0.95); /* Scale down the button on click */
+        }
+
+        .power-button .on {
+            border: 2px solid green !important;
+            box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.843); /* Green glow effect when turned on */
+        }
+
+        .power-symbol {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #ccc; /* Color of the power symbol */
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), 
+                        -2px -2px 4px rgba(255, 255, 255, 0.5); /* Neumorphic box-shadow for the symbol */
+        }
     </style>
+     
     <script type="module" src="popup.js"></script>
 </head>
 
 <body>
-    <extension-popup></extension-popup>
+    <extension-popup class="container"></extension-popup>
 </body>
 
 </html>

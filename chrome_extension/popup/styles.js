@@ -167,3 +167,77 @@ export const onOffSwitchStyles = css`
         }
     }
 `;
+
+
+export const neuromorphicText = css`
+   .neumorphic-text {
+    padding: 10px;
+    font-size: 1.2em;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #bfbfbf, 
+                -5px -5px 10px #ffffff; /* Neumorphic box-shadow */
+    display: inline-block; /* Ensure box-shadow works properly */
+}
+.neumorphic-heading {
+    font-size: 2rem; /* Adjust font size as needed */
+    text-align: center;
+    color: #222; /* Text color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), 
+                 -2px -2px 4px rgba(255, 255, 255, 0.5); /* Neumorphic text shadow */
+  }
+  .neumorphic-text-2 {
+            font-size: 24px;
+            /* Adjust font size as needed */
+            color: #333; /* Text color */
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5),
+                        -1px -1px 2px rgba(0, 0, 0, 0.2); /* Neumorphic text-shadow */
+        }
+  .neumorphic-nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px; /* Adjust margin as needed */
+  }
+
+  .neumorphic-nav-button {
+    font-size: 1.5rem; /* Adjust font size as needed */
+    cursor: pointer;
+    border: none;
+    background-color: #f0f0f0; /* Light background color */
+    color: #666; /* Text color */
+    border-radius: 50%;
+    width: 50px; /* Set width of the button */
+    height: 50px; /* Set height of the button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px; /* Adjust margin as needed */
+    box-shadow: 5px 5px 10px #bfbfbf, 
+                -5px -5px 10px #ffffff; /* Neumorphic box-shadow */
+    transition: all 0.3s ease; /* Add transition for smooth hover effect */
+  }
+
+  /* Add hover effect */
+  .neumorphic-nav-button:hover {
+    background-color: #e0e0e0; /* Lighter background color on hover */
+    transform: translateY(-2px); /* Move the button slightly up */
+  }
+  .toggle-switch {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%; /* Make the switch round */
+            background-color: #e0e0e0; /* Light gray background color */
+            box-shadow: inset 3px 3px 6px #c9c9c9, 
+                        inset -3px -3px 6px #ffffff; /* Neumorphic box-shadow */
+            transition: transform 0.3s ease; /* Add transition for smoother animation */
+        }
+
+        /* Style for checked state of the switch */
+        .toggle-container input[type="checkbox"]:checked + label .toggle-switch {
+            transform: translateX(26px); /* Move the switch to the right */
+        }
+`;

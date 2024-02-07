@@ -367,7 +367,6 @@ async function findPatternDeep(node, domOld) {
             const prediction = await makePredictionRequest(node.textContent);
             // console.log("prediction for text: ", node.textContent, " is: ", prediction);
             if(prediction.predicted_class_index != 0){
-                console.log(prediction, 'predictionnn')
                 // Find the element in the original DOM.
                 let elem = getElementByPhid(document, node.dataset.phid);
                 // Check if the element still exists.

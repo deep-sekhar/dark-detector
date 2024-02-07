@@ -5,7 +5,7 @@ import * as constants from "../scripts/constants.js";
 import { LitElement, html, css } from '../scripts/lit/lit-core.min.js';
 
 // Import component styles
-import { onOffSwitchStyles, sharedStyles, actionButtonStyles, patternsListStyles, patternLinkStyles } from "./styles.js";
+import { onOffSwitchStyles, sharedStyles, actionButtonStyles, patternsListStyles, patternLinkStyles, neuromorphicText } from "./styles.js";
 
 /**
  * The object to access the API functions of the browser.
@@ -175,6 +175,7 @@ export class PopupHeader extends LitElement {
     // CSS styles for the HTML elements in the component.
     static styles = [
         sharedStyles,
+        neuromorphicText,
         css`
             h3 {
                 color: red;
@@ -188,7 +189,7 @@ export class PopupHeader extends LitElement {
      */
     render() {
         return html`
-        <h1>${brw.i18n.getMessage("extName")}</h1>
+        <h1 class='neumorphic-heading'>${brw.i18n.getMessage("extName")}</h1>
         ${!constants.patternConfigIsValid ?
                 html`<h3>${brw.i18n.getMessage("errorInvalidConfig")}<h3>` : html``}
       `;
@@ -237,7 +238,7 @@ export class OnOffSwitch extends LitElement {
      */
     render() {
         return html`
-        <div>
+        <div class='toggle-container' >
             <input type="checkbox" id="main-onoffswitch" tabindex="0"
                 @change=${this.changeActivation}
                 .checked=${this.activation === activationState.On}
@@ -250,6 +251,7 @@ export class OnOffSwitch extends LitElement {
       `;
     }
 }
+
 // Define a custom element for the component so that it can be used in the HTML DOM.
 customElements.define("on-off-switch", OnOffSwitch);
 
@@ -269,7 +271,8 @@ export class RefreshButton extends LitElement {
     // CSS styles for the HTML elements in the component.
     static styles = [
         sharedStyles,
-        actionButtonStyles
+        actionButtonStyles,
+        neuromorphicText
     ];
 
     /**
@@ -294,7 +297,7 @@ export class RefreshButton extends LitElement {
             return html``;
         }
         return html`
-        <div>
+        <div class='neumorphic-text-2'>
             <span @click=${this.refreshTab}>${brw.i18n.getMessage("buttonReloadPageForChange")}</span>
         </div>
         `;
@@ -364,7 +367,8 @@ export class FoundPatternsList extends LitElement {
     static styles = [
         sharedStyles,
         patternsListStyles,
-        patternLinkStyles
+        patternLinkStyles,
+        neuromorphicText
     ];
 
     /**
@@ -378,7 +382,7 @@ export class FoundPatternsList extends LitElement {
         }
         return html`
         <div>
-            <h2>${brw.i18n.getMessage("headingFoundPatterns")}</h2>
+            <h2 class='neumorphic-text'>${brw.i18n.getMessage("headingFoundPatterns")}</h2>
             <h2 style="color: ${this.results.countVisible ? "red" : "green"}">${this.results.countVisible}</h2>
             <ul>
                 ${this.results.patterns?.map((pattern) => {
@@ -594,18 +598,23 @@ export class ShowPatternButtons extends LitElement {
      * Render the HTML of the component.
      * @returns {html} HTML of the component
      */
+    static styles = [
+        neuromorphicText
+    ];
     render() {
         // Return an empty string if the component is not activated or if no patterns were detected.
         if (this.activation !== activationState.On || this.results.countVisible === 0) {
             return html``;
         }
-
+        // ⏮️⏭️
         return html`
         <div>
             <h2>${brw.i18n.getMessage("headingShowPattern")}</h2>
-            <span class="button" @click=${this.showPreviousPattern}>⏮️</span>
+            <div class="neumorphic-nav-container">
+            <span class="button neumorphic-nav-button" @click=${this.showPreviousPattern}> ←</span>
             <span>${brw.i18n.getMessage("showPatternState", [this.getCurrentPatternNumber(), this.results.countVisible.toString()])}</span>
-            <span class="button" @click=${this.showNextPattern}>⏭️</span>
+            <span class="button neumorphic-nav-button" @click=${this.showNextPattern}>→</span>
+            </div>
             ${this.getCurrentPatternText()}
         </div>
       `;
@@ -638,7 +647,12 @@ export class SupportedPatternsList extends LitElement {
     render() {
         return html`
         <div>
-            <h2>${brw.i18n.getMessage("headingSupportedPatterns")}</h2>
+            
+        </div>
+      `;
+    }
+}
+{/* <h2>${brw.i18n.getMessage("headingSupportedPatterns")}</h2>
             <ul>
                 ${constants.patternConfig.patterns.map((pattern) =>
             html`
@@ -648,11 +662,7 @@ export class SupportedPatternsList extends LitElement {
                         </a>
                     </li>`
         )}
-            </ul>
-        </div>
-      `;
-    }
-}
+            </ul> */}
 // Define a custom element for the component so that it can be used in the HTML DOM.
 customElements.define("supported-patterns-list", SupportedPatternsList);
 
