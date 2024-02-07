@@ -325,34 +325,34 @@ async function findPatternDeep(node, domOld) {
                 // Extracted text from the image
                 const text = data.extracted_text;
 
-                console.log("url:",  node.src, "text:", text)
+                // console.log("url:",  node.src, "text:", text)
                 // Replace the image node with extracted text as node.textContent
                 // node.textContent = text;
 
                 // After replacing the image with extracted text, you can pass it to the next condition for further tasks
                 // Check if the text length is greater than 20, contains numbers, and is within a certain length
-                // if (text.length > 10 && text.match(/\d+/g) && text.length < 40000) {
-                //     // Make prediction request
-                //     const prediction = makePredictionRequest(text);
-                //     if (prediction.predicted_class_index != 0) {
-                //         // Find the element in the original DOM.
-                //         let elem = getElementByPhid(document, node.dataset.phid);
-                //         // Check if the element still exists.
-                //         if (elem) {
-                //             // Add classes for patterns to the element
-                //             elem.classList.add(
-                //                 constants.patternDetectedClassName,
-                //                 constants.extensionClassPrefix + prediction.predicted_label
-                //             );
-                //         }
-                //         // Remove the previous state of the node, if it exists.
-                //         if (nodeOld) {
-                //             nodeOld.remove();
-                //         }
-                //         // Remove the node from the DOM
-                //         node.remove();
-                //     }
-                // }
+                if (text.length > 10 && text.match(/\d+/g) && text.length < 40000) {
+                    // Make prediction request
+                    const prediction = makePredictionRequest(text);
+                    if (prediction.predicted_class_index != 0) {
+                        // Find the element in the original DOM.
+                        let elem = getElementByPhid(document, node.dataset.phid);
+                        // Check if the element still exists.
+                        if (elem) {
+                            // Add classes for patterns to the element
+                            elem.classList.add(
+                                constants.patternDetectedClassName,
+                                constants.extensionClassPrefix + prediction.predicted_label
+                            );
+                        }
+                        // Remove the previous state of the node, if it exists.
+                        if (nodeOld) {
+                            nodeOld.remove();
+                        }
+                        // Remove the node from the DOM
+                        node.remove();
+                    }
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
