@@ -13,3 +13,5 @@ firefox/*
 
 # Safari version (do not track the generated folder)
 safari/*
+
+.env

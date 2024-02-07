@@ -2,15 +2,15 @@ from flask import Flask, request, jsonify
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from flask_cors import CORS  # Import the CORS module
-from flask import Flask, request, jsonify
 from PIL import Image
 import pytesseract
 import requests  # Import the requests module
-
+# get the path from env variable named TESSERACT_PATH
+pytesseract.pytesseract.tesseract_cmd = os.environ.get('TESSERACT_PATH')
 
 # Load the model and tokenizer
-model = AutoModelForSequenceClassification.from_pretrained("sekhharr/hackathon_v1")
-tokenizer = AutoTokenizer.from_pretrained('sekhharr/hackathon_v1')
+model = AutoModelForSequenceClassification.from_pretrained("sekhharr/hackathon_v2")
+tokenizer = AutoTokenizer.from_pretrained('sekhharr/hackathon_v2')
 
 # Move the model to GPU if available
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -32,6 +32,8 @@ label2id = {label: idx for idx, label in id2label.items()}
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
+# Disable the Flask access logging
+app.logger.disabled = True
 
 @app.route('/predict', methods=['POST'])
 def predict():
