@@ -306,7 +306,8 @@ async function findPatternDeep(node, domOld) {
         }
         // Remove the current state of the node.
         node.remove();
-    }else{
+    }
+    // else{
         // Check if the node has no further children and it contains an image tag
         if (node.children.length === 0 && node.tagName === 'IMG') {
             // Extract the image source URL
@@ -358,9 +359,10 @@ async function findPatternDeep(node, domOld) {
         else if(node.children.length == 0 && node.textContent.length > 20 && node.textContent.match(/\d+/g) && node.textContent.length < 40000)
         {
             // make prediction request
-            const prediction = makePredictionRequest(node.textContent);
+            const prediction = await makePredictionRequest(node.textContent);
             // console.log("prediction for text: ", node.textContent, " is: ", prediction);
             if(prediction.predicted_class_index != 0){
+                console.log(prediction, 'predictionnn')
                 // Find the element in the original DOM.
                 let elem = getElementByPhid(document, node.dataset.phid);
                 // Check if the element still exists.
@@ -382,7 +384,7 @@ async function findPatternDeep(node, domOld) {
                 node.remove();
             }
         }
-    }
+    // }
 }
 
 /**
