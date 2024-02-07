@@ -65,7 +65,7 @@ Also, install tesseract-ocr from the following link:
 
 7. Create a .env file in the root directory of the project and add the following lines:
   ```bash
-  TESSERACT_PATH = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+  TESSERACT_PATH = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
   ```
 Check if the path is same for your system. If not, change the path accordingly.
 
