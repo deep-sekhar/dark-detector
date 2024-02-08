@@ -494,10 +494,11 @@ function elementIsVisible(elem) {
     // Get the 'actual' style of the element after applying active stylesheets.
     const computedStyle = getComputedStyle(elem);
     // if the ele is an image and its height and width are 0, then it is not visible
-    if (elem.tagName === 'IMG' && (elem.height === 0 || elem.width === 0)) {
+    // if it is leaf node and contains image tag
+    if (elem.children.length === 0 && elem.tagName === 'IMG' && (elem.height === 0 || elem.width === 0)) {
         return false;
     }
-    else if (elem.tagName === 'IMG' && (elem.height !== 0 || elem.width !== 0)) {
+    else if (elem.children.length === 0 && elem.tagName === 'IMG' && (elem.height !== 0 || elem.width !== 0)) {
         return true;
     }
     // Check if the element has explicit CSS styles which hide it or make it invisible.
