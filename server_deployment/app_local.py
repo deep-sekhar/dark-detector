@@ -82,8 +82,8 @@ def predict_image():
         # print(extracted_text)
         if extracted_text == "":
             return jsonify({
-            'predicted_label': 0,
-            'predicted_class_index': "--"
+            'predicted_label': "--",
+            'predicted_class_index': "0"
         })
         # Tokenize and move tensors to the device
         inputs = tokenizer(extracted_text, return_tensors='pt')

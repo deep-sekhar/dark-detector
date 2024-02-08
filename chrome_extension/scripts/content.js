@@ -1,3 +1,78 @@
+// tooltip functionality:
+// Object to map dark pattern names to their tooltips
+const darkPatternTooltips = {
+    "not_dark": "Not a Dark Pattern",
+    "countdown": "Countdown Dark Pattern",
+    "scarcity": "Scarcity Dark Pattern",
+    "mis_direction": "Misdirection Dark Pattern",
+    "social-proof": "Social Proof Dark Pattern",
+    "sneaking": "Sneaking Dark Pattern",
+    "obstruction": "Obstruction Dark Pattern",
+    "forced-continuity": "Forced Continuity Dark Pattern"
+};
+
+/**
+ * Adds tooltip functionality to dark pattern elements.
+ */
+/**
+ * Adds tooltip functionality to dark pattern elements.
+ */
+function addTooltipToDarkPatternElements() {
+    // Get all dark pattern elements
+    const darkPatternElements = document.querySelectorAll('.' + constants.patternDetectedClassName);
+
+    // Log the number of dark pattern elements found
+    console.log('Number of dark pattern elements:', darkPatternElements.length);
+
+    // Add event listeners to each dark pattern element
+    darkPatternElements.forEach(element => {
+        // Log the dark pattern element for debugging
+        // console.log('Dark pattern element:', element);
+
+        // Get the dark pattern name from the element's class
+        const patternName = element.classList[1].replace(constants.extensionClassPrefix, '');
+
+        // Log the dark pattern name for debugging
+        // console.log('Dark pattern name:', patternName);
+
+        // Create a tooltip element
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+        tooltip.textContent = darkPatternTooltips[patternName];
+        tooltip.style.visibility = 'hidden';
+
+        // Log the created tooltip element for debugging
+        // console.log('Tooltip element:', tooltip);
+
+        // Append tooltip to the body
+        document.body.appendChild(tooltip);
+
+        // Add event listeners to show/hide tooltip on hover
+        element.addEventListener('mouseover', (event) => {
+            // Get mouse position
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            // Set tooltip position relative to mouse cursor
+            tooltip.style.top = mouseY + 'px';
+            tooltip.style.left = mouseX + 'px';
+            tooltip.style.visibility = 'visible';
+
+            // Log tooltip position for debugging
+            console.log('Tooltip position:', mouseY, mouseX);
+        });
+
+        element.addEventListener('mouseleave', () => {
+            // Hide tooltip on mouse leave
+            tooltip.style.visibility = 'hidden';
+
+            // Log tooltip visibility for debugging
+            console.log('Tooltip hidden');
+        });
+    });
+}
+
+
 /**
  * The object to access the API functions of the browser.
  * @constant
@@ -148,6 +223,7 @@ async function patternHighlighting(waitForChanges = false) {
 
     // Send the information about the detected patterns to the other extension scripts.
     sendResults();
+    // addTooltipToDarkPatternElements();
 
     // Watch the entire page for changes in the DOM. All nodes, their attributes and contents are observed.
     // Elements that will be ignored later are also observed.
@@ -298,6 +374,7 @@ async function findPatternDeep(node, domOld) {
             return;
         }
         const data = await res.json();
+        // console.log("data: ", data.predicteds_label)
         if(data.predicted_class_index != 0){
             // Find the element in the original DOM.
             let elem = getElementByPhid(document, node.dataset.phid);
