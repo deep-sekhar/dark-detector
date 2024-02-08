@@ -279,10 +279,53 @@ async function findPatternDeep(node, domOld) {
     // Extract the previous state of the node from the old DOM. Is `null` if the node did not exist yet.
     let nodeOld = getElementByPhid(domOld, node.dataset.phid);
 
+    // EDGE CASE 
+    // if leaf node and contains image tag
+    if(node.children.length === 0 && node.tagName === 'IMG'){
+        // extract the text from the image
+        const res1 = await fetch('http://localhost:5000/extract_image', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ image_link: node.src })
+        })
+        if(!res1.ok){
+            return;
+        }
+        const data = await res1.json();
+        const text = data.extracted_text;
+        // After replacing the image with extracted text, you can pass it to the next condition for further tasks
+        if (text.length > 10 && text.match(/\d+/g) && text.length < 40000) {
+            // Make prediction request
+            const prediction = await makePredictionRequest(text);
+            // console.log("prediction for text: ", text, " is: ", prediction);
+            if (prediction.predicted_class_index != 0)
+            {
+                // Find the element in the original DOM.
+                let elem = getElementByPhid(document, node.dataset.phid);
+                // Check if the element still exists.
+                if (elem) {
+                    // Add classes for patterns to the element
+                    elem.classList.add(
+                        constants.patternDetectedClassName,
+                        constants.extensionClassPrefix + prediction.predicted_label
+                    );
+                }
+                // Remove the previous state of the node, if it exists.
+                if (nodeOld) {
+                    nodeOld.remove();
+                }
+                // Remove the node from the DOM
+                node.remove();
+            }
+        }
+        return;
+    }
+
+    // else use regex and model to check if the text is has dark pattern or not
     // Check if the node represents one of the patterns.
     let foundPattern = findPatterInNode(node, nodeOld);
-    // print the text content of the node to the console
-    // console.log(node.textContent)
 
     // If a pattern is detected, add appropriate classes to the element
     // and remove it from the DOM for the further pattern search.
@@ -293,8 +336,6 @@ async function findPatternDeep(node, domOld) {
         if (elem) {
             // Add a general class for patterns to the element
             // and a class for the specific pattern the element represents.
-            // console.log(constants.patternDetectedClassName)
-            // console.log(constants.extensionClassPrefix + foundPattern)
             elem.classList.add(
                 constants.patternDetectedClassName,
                 constants.extensionClassPrefix + foundPattern
@@ -307,61 +348,10 @@ async function findPatternDeep(node, domOld) {
         // Remove the current state of the node.
         node.remove();
     }
-    // else{
-        // Check if the node has no further children and it contains an image tag
-        if (node.children.length === 0 && node.tagName === 'IMG') {
-            // Extract the image source URL
-            const imageUrl = node.src;
-
-            // Make a POST request to the extract_image API
-            fetch('http://localhost:5000/extract_image', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ image_link: imageUrl })
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Extracted text from the image
-                const text = data.extracted_text;
-
-                // console.log("url:",  node.src, "text:", text)
-                // Replace the image node with extracted text as node.textContent
-                // node.textContent = text;
-
-                // After replacing the image with extracted text, you can pass it to the next condition for further tasks
-                // Check if the text length is greater than 20, contains numbers, and is within a certain length
-                if (text.length > 10 && text.match(/\d+/g) && text.length < 40000) {
-                    // Make prediction request
-                    const prediction = makePredictionRequest(text);
-                    if (prediction.predicted_class_index != 0) {
-                        // Find the element in the original DOM.
-                        let elem = getElementByPhid(document, node.dataset.phid);
-                        // Check if the element still exists.
-                        if (elem) {
-                            // Add classes for patterns to the element
-                            elem.classList.add(
-                                constants.patternDetectedClassName,
-                                constants.extensionClassPrefix + prediction.predicted_label
-                            );
-                        }
-                        // Remove the previous state of the node, if it exists.
-                        if (nodeOld) {
-                            nodeOld.remove();
-                        }
-                        // Remove the node from the DOM
-                        node.remove();
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
+    else{
         // if node has furthur children then dont check
         // check using the model if length of text is greater than 30 and it has numbers
-        else if(node.children.length == 0 && node.textContent.length > 20 && node.textContent.match(/\d+/g) && node.textContent.length < 40000)
+        if(node.children.length == 0 && node.textContent.length > 20 && node.textContent.match(/\d+/g) && node.textContent.length < 40000)
         {
             // make prediction request
             const prediction = await makePredictionRequest(node.textContent);
@@ -388,7 +378,7 @@ async function findPatternDeep(node, domOld) {
                 node.remove();
             }
         }
-    // }
+    }
 }
 
 /**

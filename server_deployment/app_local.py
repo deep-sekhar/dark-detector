@@ -4,6 +4,7 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from flask_cors import CORS  # Import the CORS module
 from PIL import Image
 import pytesseract
+import os 
 import requests  # Import the requests module
 # get the path from env variable named TESSERACT_PATH
 pytesseract.pytesseract.tesseract_cmd = os.environ.get('TESSERACT_PATH')
@@ -37,28 +38,31 @@ app.logger.disabled = True
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = request.get_json(force=True)
-    text = data['text']
+    try:
+        data = request.get_json(force=True)
+        text = data['text']
 
-    # Tokenize and move tensors to the device
-    inputs = tokenizer(text, return_tensors='pt')
-    inputs = {key: value.to(device) for key, value in inputs.items()}
+        # Tokenize and move tensors to the device
+        inputs = tokenizer(text, return_tensors='pt')
+        inputs = {key: value.to(device) for key, value in inputs.items()}
 
-    # Make predictions
-    res = model(**inputs)
+        # Make predictions
+        res = model(**inputs)
 
-    # Further processing based on your specific use case
-    predicted_class_index = torch.argmax(res.logits).item()
-    predicted_label = id2label.get(predicted_class_index, f'Unknown Label ({predicted_class_index})')
+        # Further processing based on your specific use case
+        predicted_class_index = torch.argmax(res.logits).item()
+        predicted_label = id2label.get(predicted_class_index, f'Unknown Label ({predicted_class_index})')
 
-    # print the predicted label
-    # print(predicted_labesl)
-    # Return predictions as JSON
-    return jsonify({
-        'text': text,
-        'predicted_label': predicted_label,
-        'predicted_class_index': predicted_class_index
-    })
+        # print the predicted label
+        # print(predicted_labesl)
+        # Return predictions as JSON
+        return jsonify({
+            'text': text,
+            'predicted_label': predicted_label,
+            'predicted_class_index': predicted_class_index
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # Endpoint to extract text from the image
 @app.route('/extract_image', methods=['POST'])
