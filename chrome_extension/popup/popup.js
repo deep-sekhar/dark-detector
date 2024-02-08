@@ -296,6 +296,8 @@ export class RefreshButton extends LitElement {
         if (this.hide) {
             return html``;
         }
+        return html`<h2 class='neumorphic-text'>Processing..</h2>`;
+
         return html`
         <div class='neumorphic-text-2'>
             <span @click=${this.refreshTab}>${brw.i18n.getMessage("buttonReloadPageForChange")}</span>
@@ -604,7 +606,7 @@ export class ShowPatternButtons extends LitElement {
     render() {
         // Return an empty string if the component is not activated or if no patterns were detected.
         if (this.activation !== activationState.On || this.results.countVisible === 0) {
-            return html`Processing..`;
+            return html``;
         }
         // ⏮️⏭️
         return html`

@@ -121,8 +121,8 @@ async function initPatternHighlighter(){
         console.log(brw.i18n.getMessage("infoExtensionStarted"));
 
         // Run the initial pattern check and highlighting.
-        await patternHighlighting();
-
+        await patternHighlighting(mode="text");
+        
         // Listen for messages from the popup.
         brw.runtime.onMessage.addListener(
             function (message, sender, sendResponse) {
@@ -131,18 +131,37 @@ async function initPatternHighlighter(){
                     // Compute the pattern statistics/counts and send the result as response.
                     sendResponse(getPatternsResults());
                 } else if (message.action === "redoPatternHighlighting") {
-                    // Run the pattern checking and highlighting again,
-                    // send in response that the action has been started.
-                    patternHighlighting();
-                    sendResponse({ started: true });
+                    // dont restart now image check left 
+                    sendResponse({ started: false });
                 } else if ("showElement" in message) {
                     // Highlight/show a single pattern element that was selected in the popup.
                     showElement(message.showElement);
                     sendResponse({ success: true });
                 }
             }
-        );
-
+            );
+            
+            await patternHighlighting(mode="image");
+            brw.runtime.onMessage.addListener(
+                function (message, sender, sendResponse) {
+                    // Check which action is requested by the popup.
+                    if (message.action === "getPatternCount") {
+                        // Compute the pattern statistics/counts and send the result as response.
+                        sendResponse(getPatternsResults());
+                    } else if (message.action === "redoPatternHighlighting") {
+                        // Run the pattern checking and highlighting again,
+                        // send in response that the action has been started.
+                        patternHighlighting(mode="image");
+                        patternHighlighting(mode="text");
+                        sendResponse({ started: true });
+                    } else if ("showElement" in message) {
+                        // Highlight/show a single pattern element that was selected in the popup.
+                        showElement(message.showElement);
+                        sendResponse({ success: true });
+                    }
+                }
+                );
+            
     } else {
         // Print a message that the pattern highlighter is disabled.
         console.log(brw.i18n.getMessage("infoExtensionDisabled"))
@@ -165,7 +184,7 @@ const observer = new MutationObserver(async function () {
  * This will automatically highlight the element using predefined CSS styles.
  * @param {boolean} [waitForChanges=false] A flag to specify whether to wait briefly before executing the function.
  */
-async function patternHighlighting(waitForChanges = false) {
+async function patternHighlighting(mode, waitForChanges = false) {
     // Check if the pattern detection is already in progress.
     if (this.lock === true) {
         // If the pattern detection is already in progress, exit the function.
@@ -216,7 +235,7 @@ async function patternHighlighting(waitForChanges = false) {
     // If elements are identified as patterns, respective classes are added to them.
     // findPatternDeep(domCopyB, domCopyA);
     // wait for pattern recognition to finish
-    await findPatternDeep(domCopyB, domCopyA);
+    await findPatternDeep(domCopyB, domCopyA, mode);
 
     // Destroy both DOM copies so that they can be removed from memory.
     domCopyA.replaceChildren();
@@ -355,7 +374,7 @@ async function makePredictionRequest(text) {
     }
   }
 
-async function findPatternDeep(node, domOld) {
+async function findPatternDeep(node, domOld, mode) {
     // if node already has the dark pattern class, then return
     let regx = new RegExp("\\b" + constants.extensionClassPrefix + "[^ ]*[ ]?\\b", "g");
     let elem = getElementByPhid(document, node.dataset.phid);
@@ -370,7 +389,7 @@ async function findPatternDeep(node, domOld) {
     // Iterate over all child nodes of the provided DOM node.
     for (const child of node.children) {       
         // Execute the function recursively on each child node and wait for the result.
-        await findPatternDeep(child, domOld);
+        await findPatternDeep(child, domOld, mode);
     }
 
     // Extract the previous state of the node from the old DOM. Is `null` if the node did not exist yet.
@@ -378,7 +397,7 @@ async function findPatternDeep(node, domOld) {
 
     // EDGE CASE 
     // if leaf node and contains image tag
-    if(node.children.length === 0 && node.tagName === 'IMG'){
+    if(node.children.length === 0 && node.tagName === 'IMG' && mode === "image"){
         // extract the text from the image
         const res = await fetch('http://localhost:5000//predict_image', {
             method: 'POST',
@@ -413,6 +432,7 @@ async function findPatternDeep(node, domOld) {
         }
         return;
     }
+    if(mode == "image") return;
 
     // else use regex and model to check if the text is has dark pattern or not
     // Check if the node represents one of the patterns.
