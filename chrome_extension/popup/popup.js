@@ -612,7 +612,7 @@ export class ShowPatternButtons extends LitElement {
             <h2 class='neumorphic-heading'>${brw.i18n.getMessage("headingShowPattern")}</h2>
             <div class="neumorphic-nav-container">
             <span class="button neumorphic-nav-button" @click=${this.showPreviousPattern}> ←</span>
-            <span>${brw.i18n.getMessage("showPatternState", [this.getCurrentPatternNumber(), this.results.countVisible.toString()])}</span>
+            <span>${brw.i18n.getMessage("showPatternState", [this.getCurrentPatternNumber(), this.results.countVisible?this.results.countVisible.toString():"..."])}</span>
             <span class="button neumorphic-nav-button" @click=${this.showNextPattern}>→</span>
             </div>
             ${this.getCurrentPatternText()}
