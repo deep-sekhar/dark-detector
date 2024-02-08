@@ -151,8 +151,7 @@ async function initPatternHighlighter(){
                     } else if (message.action === "redoPatternHighlighting") {
                         // Run the pattern checking and highlighting again,
                         // send in response that the action has been started.
-                        patternHighlighting(mode="image");
-                        patternHighlighting(mode="text");
+                        patternHighlighting(mode="both");
                         sendResponse({ started: true });
                     } else if ("showElement" in message) {
                         // Highlight/show a single pattern element that was selected in the popup.
@@ -397,7 +396,7 @@ async function findPatternDeep(node, domOld, mode) {
 
     // EDGE CASE 
     // if leaf node and contains image tag
-    if(node.children.length === 0 && node.tagName === 'IMG' && mode === "image"){
+    if(node.children.length === 0 && node.tagName === 'IMG' && ( mode === "image" || mode === "both")){
         // extract the text from the image
         const res = await fetch('http://localhost:5000//predict_image', {
             method: 'POST',
