@@ -604,7 +604,7 @@ export class ShowPatternButtons extends LitElement {
     render() {
         // Return an empty string if the component is not activated or if no patterns were detected.
         if (this.activation !== activationState.On || this.results.countVisible === 0) {
-            return html``;
+            return html`Processing..`;
         }
         // ⏮️⏭️
         return html`

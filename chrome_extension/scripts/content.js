@@ -142,6 +142,7 @@ async function initPatternHighlighter(){
                 }
             }
         );
+
     } else {
         // Print a message that the pattern highlighter is disabled.
         console.log(brw.i18n.getMessage("infoExtensionDisabled"))
@@ -195,7 +196,7 @@ async function patternHighlighting(waitForChanges = false) {
 
     // Wait about 2 seconds for changes to elements to occur.
     // An example of an expected change is a countdown that counts down every second.
-    await new Promise(resolve => { setTimeout(resolve, 4000) });
+    await new Promise(resolve => { setTimeout(resolve, 2000) });
 
     // Add pattern highlighter IDs to every element on the page.
     addPhidForEveryElement(document.body);
@@ -206,7 +207,9 @@ async function patternHighlighting(waitForChanges = false) {
     removeBlacklistNodes(domCopyB);
 
     // Reset all found patterns on the page before updating them afterwards.
-    resetDetectedPatterns();
+    // --LOGIC CHANGE--
+    // Do not remove the classes of the detected patterns. This is done to save time 
+    // resetDetectedPatterns();
 
     // Identify patterns within the DOM copies. As reference for the current state of the web page `domCopyB` is used.
     // `domCopyA` is used as the previous state of the page to detect changes.
@@ -240,6 +243,9 @@ async function patternHighlighting(waitForChanges = false) {
         characterData: true,
     });
 
+    // wait for 
+    // await new Promise(resolve => { setTimeout(resolve, 2000) });
+    
     // Finally, unlock the function so that it can be executed again.
     this.lock = false;
 }
@@ -350,6 +356,17 @@ async function makePredictionRequest(text) {
   }
 
 async function findPatternDeep(node, domOld) {
+    // if node already has the dark pattern class, then return
+    let regx = new RegExp("\\b" + constants.extensionClassPrefix + "[^ ]*[ ]?\\b", "g");
+    let elem = getElementByPhid(document, node.dataset.phid);
+    // Check if the element still exists.
+    if (elem) {
+        // check if element classlist contains the pattern class
+        if(elem.classList.contains(constants.patternDetectedClassName)){
+            return;
+        }
+    }
+
     // Iterate over all child nodes of the provided DOM node.
     for (const child of node.children) {       
         // Execute the function recursively on each child node and wait for the result.
