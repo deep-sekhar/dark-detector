@@ -57,10 +57,47 @@ def predict():
         # print(predicted_labesl)
         # Return predictions as JSON
         return jsonify({
-            'text': text,
             'predicted_label': predicted_label,
             'predicted_class_index': predicted_class_index
         })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Endpoint to get prediction of the image
+@app.route('/predict_image', methods=['POST'])
+def predict_image():
+    # Get the image link from the request
+    image_link = request.json.get('image_link', None)
+
+    # Check if image link is provided
+    if not image_link:
+        return jsonify({'error': 'Image link is missing'}), 400
+
+    try:
+        # Open the image from the provided link
+        img = Image.open(requests.get(image_link, stream=True).raw)
+
+        # Use Tesseract OCR to extract text from the image
+        extracted_text = pytesseract.image_to_string(img)
+        # print(extracted_text)
+        if extracted_text == "":
+            return jsonify({
+            'predicted_label': 0,
+            'predicted_class_index': "--"
+        })
+        # Tokenize and move tensors to the device
+        inputs = tokenizer(extracted_text, return_tensors='pt')
+        inputs = {key: value.to(device) for key, value in inputs.items()}
+        # Make predictions
+        res = model(**inputs)
+        predicted_class_index = torch.argmax(res.logits).item()
+        predicted_label = id2label.get(predicted_class_index, f'Unknown Label ({predicted_class_index})')
+        # Return the extracted text as response
+        return jsonify({
+            'predicted_label': predicted_label,
+            'predicted_class_index': predicted_class_index
+        })
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

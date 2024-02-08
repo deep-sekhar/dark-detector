@@ -260,12 +260,16 @@ async function makePredictionRequest(text) {
       } else {
         // Handle non-OK response, e.g., log an error
         console.error('Prediction request failed:', response.statusText);
-        return null;
+        return {
+            "predicted_class_index": 0,
+        }
       }
     } catch (error) {
       // Handle network errors, e.g., log an error
       console.error('Network error during prediction request:', error.message);
-      return null;
+      return {
+        "predicted_class_index": 0,
+      }
     }
   }
 
@@ -283,42 +287,35 @@ async function findPatternDeep(node, domOld) {
     // if leaf node and contains image tag
     if(node.children.length === 0 && node.tagName === 'IMG'){
         // extract the text from the image
-        const res1 = await fetch('http://localhost:5000/extract_image', {
+        const res = await fetch('http://localhost:5000//predict_image', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ image_link: node.src })
         })
-        if(!res1.ok){
+        if (!res.ok) {
             return;
         }
-        const data = await res1.json();
-        const text = data.extracted_text;
-        // After replacing the image with extracted text, you can pass it to the next condition for further tasks
-        if (text.length > 10 && text.match(/\d+/g) && text.length < 40000) {
-            // Make prediction request
-            const prediction = await makePredictionRequest(text);
-            // console.log("prediction for text: ", text, " is: ", prediction);
-            if (prediction.predicted_class_index != 0)
-            {
-                // Find the element in the original DOM.
-                let elem = getElementByPhid(document, node.dataset.phid);
-                // Check if the element still exists.
-                if (elem) {
-                    // Add classes for patterns to the element
-                    elem.classList.add(
-                        constants.patternDetectedClassName,
-                        constants.extensionClassPrefix + prediction.predicted_label
-                    );
-                }
-                // Remove the previous state of the node, if it exists.
-                if (nodeOld) {
-                    nodeOld.remove();
-                }
-                // Remove the node from the DOM
-                node.remove();
+        const data = await res.json();
+        if(data.predicted_class_index != 0){
+            // Find the element in the original DOM.
+            let elem = getElementByPhid(document, node.dataset.phid);
+            // Check if the element still exists.
+            if (elem) {
+                // Add a general class for patterns to the element
+                // and a class for the specific pattern the element represents.
+                elem.classList.add(
+                    constants.patternDetectedClassName,
+                    constants.extensionClassPrefix + data.predicted_label
+                );
             }
+            // Remove the previous state of the node, if it exists.
+            if (nodeOld) {
+                nodeOld.remove();
+            }
+            // Remove the current state of the node.
+            node.remove();
         }
         return;
     }
@@ -349,8 +346,6 @@ async function findPatternDeep(node, domOld) {
         node.remove();
     }
     else{
-        // if node has furthur children then dont check
-        // check using the model if length of text is greater than 30 and it has numbers
         if(node.children.length == 0 && node.textContent.length > 20 && node.textContent.match(/\d+/g) && node.textContent.length < 40000)
         {
             // make prediction request
@@ -404,6 +399,13 @@ function resetDetectedPatterns() {
 function elementIsVisible(elem) {
     // Get the 'actual' style of the element after applying active stylesheets.
     const computedStyle = getComputedStyle(elem);
+    // if the ele is an image and its height and width are 0, then it is not visible
+    if (elem.tagName === 'IMG' && (elem.height === 0 || elem.width === 0)) {
+        return false;
+    }
+    else if (elem.tagName === 'IMG' && (elem.height !== 0 || elem.width !== 0)) {
+        return true;
+    }
     // Check if the element has explicit CSS styles which hide it or make it invisible.
     if (computedStyle.visibility == "hidden" || computedStyle.display == "none" || computedStyle.opacity == "0") {
         // Return `false` if the element is not visible.
@@ -433,6 +435,10 @@ function getPatternsResults() {
         // The total count of detected elements that represent patterns.
         "count": 0,
     }
+    // print all the pattern names 
+    // for(const pattern of constants.patternConfig.patterns){
+    //     console.log(pattern.name, "++")
+    // }
     // Iterate over all patterns in the `patternConfig`.
     for (const pattern of constants.patternConfig.patterns) {
         // Array to collect all visible elements to the pattern.
