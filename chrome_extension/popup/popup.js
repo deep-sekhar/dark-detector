@@ -609,7 +609,7 @@ export class ShowPatternButtons extends LitElement {
         // ⏮️⏭️
         return html`
         <div>
-            <h2>${brw.i18n.getMessage("headingShowPattern")}</h2>
+            <h2 class='neumorphic-heading'>${brw.i18n.getMessage("headingShowPattern")}</h2>
             <div class="neumorphic-nav-container">
             <span class="button neumorphic-nav-button" @click=${this.showPreviousPattern}> ←</span>
             <span>${brw.i18n.getMessage("showPatternState", [this.getCurrentPatternNumber(), this.results.countVisible.toString()])}</span>
@@ -674,6 +674,7 @@ export class PopupFooter extends LitElement {
     // CSS styles for the HTML elements in the component.
     static styles = [
         sharedStyles,
+        neuromorphicText,
         css`
             div {
                 margin-top: 2em;
@@ -687,8 +688,8 @@ export class PopupFooter extends LitElement {
      */
     render() {
         return html`
-        <div>
-            ${brw.i18n.getMessage("textMoreInformation")}: <a href="https://dpbh2023.in/index.html" target="_blank"><br>Ethical Eagles</a>.
+        <div style="margin:2px">
+            ${brw.i18n.getMessage("textMoreInformation")}: <a href="https://dpbh2023.in/index.html" target="_blank" ><br> <img src='../images/Logo.png' width='100px' class="neumorphic-image"/></a>.
         </div>
       `;
     }

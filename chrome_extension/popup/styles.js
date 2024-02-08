@@ -180,7 +180,7 @@ export const neuromorphicText = css`
     display: inline-block; /* Ensure box-shadow works properly */
 }
 .neumorphic-heading {
-    font-size: 2rem; /* Adjust font size as needed */
+    /*font-size: 2rem;  Adjust font size as needed */
     text-align: center;
     color: #222; /* Text color */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), 
@@ -239,5 +239,13 @@ export const neuromorphicText = css`
         /* Style for checked state of the switch */
         .toggle-container input[type="checkbox"]:checked + label .toggle-switch {
             transform: translateX(26px); /* Move the switch to the right */
+        }
+        .neumorphic-image {
+            margin-top:5px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #e0e0e0, #f5f5f5);
+            /* Gradient background */
+            box-shadow: 6px 6px 12px #c9c9c9,
+                        -6px -6px 12px #ffffff; /* Neumorphic box-shadow */
         }
 `;
