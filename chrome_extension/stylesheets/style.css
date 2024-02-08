@@ -1,7 +1,21 @@
-.__ph__pattern-detected {
-    /** background-color: red !important; **/
-    border: 3px solid rgb(19, 11, 246) !important;
+
+@keyframes borderAnimation {
+    0% {
+        border-color: transparent;
+    }
+    50% {
+        border-color: rgb(240, 3, 50);
+    }
+    100% {
+        border-color: transparent;
+    }
 }
+
+.__ph__pattern-detected {
+    border: 4.5px solid transparent; /* Fixed border width */
+    animation: borderAnimation 1.5s infinite; /* Adjust animation duration as needed */
+}
+
 
 .__ph__current-pattern {
     z-index: 10000 !important;

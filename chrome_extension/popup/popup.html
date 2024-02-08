@@ -41,17 +41,19 @@
             border: none;
             /* Remove the border */
             border-radius: 1rem;
-            box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.1),
-                -8px -8px 16px 0 rgba(255, 255, 255, 0.5),
-                inset 4px 4px 8px rgba(0, 0, 0, 0.1),
-                inset -4px -4px 8px rgba(255, 255, 255, 0.5);
-            /* Add neumorphic box-shadow with inset shadow */
+            background-color: #f0f0f0; /* Background color */
+            padding: 20px; /* Adjust padding as needed */
+            box-shadow: 10px 10px 20px #bebebe, /* Outer shadow */
+                -10px -10px 20px #ffffff; /* Inner shadow *//
         }
 
         @media (prefers-color-scheme: dark) {
+            /* No separate dark theme for now  */
             body {
-                color: rgb(0, 0, 0);
-                background: rgb(255, 255, 255);
+                /* background-color: #333333; 
+                color: #ffffff; 
+                box-shadow: 10px 10px 20px #000000, 
+                    -10px -10px 20px #555555;  */
             }
         }
 
