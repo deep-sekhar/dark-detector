@@ -480,7 +480,7 @@ function getPatternsResults() {
 function sendResults() {
     // Create the result object with all information and counts.
     let results = getPatternsResults();
-    console.log("res: ", results)
+    // console.log("res: ", results)
 
     // Send the object to all other extension scripts. Do nothing in the event of a reply.
     brw.runtime.sendMessage(
