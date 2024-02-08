@@ -56,6 +56,7 @@ To install the extension, follow these steps:
   pip install torch
   pip install flask_cors
   pip install pytesseract
+  pip install pymongo 
   ```
 Also, install tesseract-ocr from the following link:
   ```bash

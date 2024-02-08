@@ -124,6 +124,26 @@ def extract_image():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/collect_user_feedback', methods=['POST'])
+def collect_user_feedback():
+    try:
+        client = MongoClient('mongodb+srv://thatsmeayushi2002:Ayushi123@cluster0.nj1phdt.mongodb.net/')
+        db = client['user_feedback']  # database name
+        collection = db['Feedback']  # collection name
+
+    except Exception as e:
+        print("Failed to connect ",e)
+    data = request.get_json()
+    if data:
+        # Insert data into MongoDB
+        result = collection.insert_one(data)
+        if result.inserted_id:
+            return jsonify({"message": "Data inserted successfully", "id": str(result.inserted_id)}), 201
+        else:
+            return jsonify({"error": "Failed to insert data"}), 500
+    else:
+        return jsonify({"error": "No data provided"}), 400
+
 if __name__ == '__main__':
     # Run the Flask application on localhost:5000
     app.run()
