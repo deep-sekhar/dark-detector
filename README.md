@@ -10,8 +10,7 @@ Welcome to the Ethical Eagles Dark Pattern Detector repository! Our team from II
 
 ## Dataset Used
 
-We have used the dataset from the paper (Dark patterns in e-commerce: a dataset and its baseline evaluations)[https://arxiv.org/abs/2211.06543] to train our transformer model.
-The dataset has 2,356 sentences, and their corresponding outputs indicating the existence of dark patterns. 
+We have fine-tuned a general purpose transformer model by building a custom dataset. The model is a classifier that identifies text coming from DOM elements and the text extracted from images, as one of the 7 dark patterns, or not a dark pattern, as per the case. Evaluation results on a test dataset are satisfactory at over 98%.
 
 ## Features
 
