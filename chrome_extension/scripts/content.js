@@ -419,6 +419,25 @@ async function findPatternDeep(node, domOld, mode) {
                     constants.patternDetectedClassName,
                     constants.extensionClassPrefix + data.predicted_label
                 );
+
+                // Create the child element container
+                let childContainer = document.createElement('div');
+                childContainer.className = 'child';
+
+                let childElement1 = document.createElement('div');
+                childElement1.className = 'child1';
+                childElement1.textContent = '✓';
+
+                let childElement2 = document.createElement('div');
+                childElement2.className = 'child2';
+                childElement2.textContent = '✗';
+
+                // Append the child elements to the child container
+                childContainer.appendChild(childElement1);
+                childContainer.appendChild(childElement2);
+
+                // Insert the first child element after the parent element
+                elem.parentNode.insertBefore(childContainer, elem.nextSibling);
             }
             // Remove the previous state of the node, if it exists.
             if (nodeOld) {
@@ -448,6 +467,36 @@ async function findPatternDeep(node, domOld, mode) {
                 constants.patternDetectedClassName,
                 constants.extensionClassPrefix + foundPattern
             );
+
+            // Create the child element container
+            let childContainer = document.createElement('div');
+            childContainer.className = 'child';
+
+            // Create the first child element with 'child1' class and an image source
+            // let childElement1 = document.createElement('img');
+            // childElement1.className = 'child1';
+            // childElement1.src = 'https://png.pngtree.com/element_our/20200702/ourmid/pngtree-simple-style-correct-symbol-icon-material-image_2291415.jpg';
+
+
+            // Create the second child element with 'child2' class and an image source
+            // let childElement2 = document.createElement('img');
+            // childElement2.className = 'child2';
+            // childElement2.src = 'https://png.pngtree.com/png-vector/20190724/ourmid/pngtree-false-free-png-png-image_1589434.jpg';
+
+            let childElement1 = document.createElement('div');
+            childElement1.className = 'child1';
+            childElement1.textContent = '✓';
+
+            let childElement2 = document.createElement('div');
+            childElement2.className = 'child2';
+            childElement2.textContent = '✗';
+
+            // Append the child elements to the child container
+            childContainer.appendChild(childElement1);
+            childContainer.appendChild(childElement2);
+
+            // Insert the first child element after the parent element
+            elem.parentNode.insertBefore(childContainer, elem.nextSibling);
         }
         // Remove the previous state of the node, if it exists.
         if (nodeOld) {
@@ -475,6 +524,25 @@ async function findPatternDeep(node, domOld, mode) {
                         constants.patternDetectedClassName,
                         constants.extensionClassPrefix + prediction.predicted_label
                     );
+
+                    // Create the child element container
+                    let childContainer = document.createElement('div');
+                    childContainer.className = 'child';
+
+                    let childElement1 = document.createElement('div');
+                    childElement1.className = 'child1';
+                    childElement1.textContent = '✓';
+
+                    let childElement2 = document.createElement('div');
+                    childElement2.className = 'child2';
+                    childElement2.textContent = '✗';
+
+                    // Append the child elements to the child container
+                    childContainer.appendChild(childElement1);
+                    childContainer.appendChild(childElement2);
+
+                    // Insert the first child element after the parent element
+                    elem.parentNode.insertBefore(childContainer, elem.nextSibling);
                 }
                 // Remove the previous state of the node, if it exists.
                 if (nodeOld) {

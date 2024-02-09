@@ -24,8 +24,59 @@
 .__ph__pattern-detected {
     border: 4.5px solid transparent; /* Fixed border width */
     animation: borderAnimation 1.5s infinite; /* Adjust animation duration as needed */
+    /* position: relative; */
 }
 
+.child {
+    display: none; /* Initially hide the child container */
+    position: relative;
+    top: -24px;
+    left: calc(100% - 60px);
+    z-index: 10; /* Set a higher z-index to ensure it's on top of other content */
+    transition: opacity 0.2s ease-in-out; /* Add a smooth transition effect */
+    height: 28px; /* Set height */
+    width: 60px; /* Set width to accommodate both child images */
+}
+
+.__ph__pattern-detected:hover + .child, .child:hover  {
+    display: flex; /* Show the child container when the parent is hovered */
+    opacity: 1; /* Make it fully visible */
+}
+
+.child1, .child2 {
+    font-size: 1.2rem; /* Adjust font size as needed */
+    cursor: pointer;
+    border: none;
+    background-color: #f0f0f0; /* Light background color */
+    color: #666; /* Text color */
+    border-radius: 50%;
+    width: 20px; /* Set width of the button */
+    height:20px; /* Set height of the button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 4px; /* Adjust margin as needed */
+    padding: 3px;
+    box-shadow: 2px 2px 5px #bfbfbf, 
+                -2px -2px 5px #ffffff; /* Neumorphic box-shadow */
+    transition: all 0.3s ease; /* Add transition for smooth hover effect */
+  }
+
+  .child1{
+    background-color: rgb(165, 239, 165);
+    color: darkgreen;
+  }
+
+  .child2{
+    background-color: rgb(236, 138, 138);
+    color: darkred;
+  }
+
+  /* Add hover effect */
+  .child1:hover, .child2:hover {
+    background-color: #e0e0e0; /* Lighter background color on hover */
+    transform: translateY(-1px); /* Move the button slightly up */
+  }
 
 .__ph__current-pattern {
     z-index: 10000 !important;
