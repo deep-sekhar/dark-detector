@@ -5,6 +5,7 @@ from flask_cors import CORS  # Import the CORS module
 from PIL import Image
 import pytesseract
 import os 
+from pymongo import MongoClient
 import requests  # Import the requests module
 # get the path from env variable named TESSERACT_PATH
 pytesseract.pytesseract.tesseract_cmd = os.environ.get('TESSERACT_PATH')

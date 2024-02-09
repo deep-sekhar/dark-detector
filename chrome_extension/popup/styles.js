@@ -168,7 +168,59 @@ export const onOffSwitchStyles = css`
     }
 `;
 
+export const neumorphicForm = css`
+            /* Form styles */
+        form {
+            display: none; /* Initially hidden */
+            flex-direction: column;
+        }
 
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: inset 4px 4px 8px #d9d9d9,
+                        inset -4px -4px 8px #ffffff;
+        }
+
+        input[type="submit"] {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Button to show/hide form */
+        .contribute-btn {
+            cursor: pointer;
+            text-decoration: underline;
+            color: blue;
+        }
+        .neumorphic-text {
+            cursor: pointer;
+            /* Neumorphic styles */
+            padding: 10px 20px;
+            border-radius: 10px;
+            background: linear-gradient(145deg, #e0e0e0, #f5f5f5);
+            box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.1),
+                        -8px -8px 16px 0 rgba(255, 255, 255, 0.5);
+            transition: background-color 0.3s;
+}
+`;
 export const neuromorphicText = css`
    .neumorphic-text {
     padding: 10px;

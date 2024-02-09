@@ -5,7 +5,7 @@ import * as constants from "../scripts/constants.js";
 import { LitElement, html, css } from '../scripts/lit/lit-core.min.js';
 
 // Import component styles
-import { onOffSwitchStyles, sharedStyles, actionButtonStyles, patternsListStyles, patternLinkStyles, neuromorphicText } from "./styles.js";
+import { onOffSwitchStyles, sharedStyles, actionButtonStyles, patternsListStyles, patternLinkStyles, neuromorphicText, neumorphicForm } from "./styles.js";
 
 /**
  * The object to access the API functions of the browser.
@@ -677,12 +677,75 @@ export class PopupFooter extends LitElement {
     static styles = [
         sharedStyles,
         neuromorphicText,
+        neumorphicForm,
         css`
             div {
                 margin-top: 2em;
             }
         `
     ];
+
+    toggleFormVisibility() {
+        var form = this.shadowRoot.getElementById("contributionForm");
+        form.style.display = form.style.display === "none" ? "block" : "none";
+    }
+
+    showMessage(msg) {
+        var thankYouMessage = document.createElement('p');
+        thankYouMessage.textContent = msg;
+        thankYouMessage.style.padding = '10px'; // Add padding for better appearance
+        thankYouMessage.style.backgroundColor = '#f0f0f0'; // Light background color
+        thankYouMessage.style.borderRadius = '10px'; // Rounded corners
+        thankYouMessage.style.boxShadow = '5px 5px 10px #bfbfbf, -5px -5px 10px #ffffff'; // Neumorphic box shadow      
+        this.shadowRoot.appendChild(thankYouMessage);
+      
+        // Remove the message after 5 seconds
+        setTimeout(() => {
+          this.shadowRoot.removeChild(thankYouMessage);
+        }, 5000);
+    }
+
+    validateInput(){
+        let textInput = this.shadowRoot.getElementById('contributionText');
+        let optionInput = this.shadowRoot.getElementById('contributionOption');
+        return textInput.value === '' || optionInput.value === '';
+
+    }
+
+    resetForm(){
+        let textInput = this.shadowRoot.getElementById('contributionText');
+        textInput.value = "";
+        let darkPatternInput = this.shadowRoot.getElementById('contributionOption');
+        darkPatternInput.value = "not_dark";
+        // console.log(darkPatternInput);
+    }
+
+    async submitForm(event) {
+        event.preventDefault(); // Prevent default form submission
+        if(this.validateInput()){
+            this.showMessage("Please fill all the fields");
+            return;
+        }
+        this.resetForm();
+        this.showMessage('Thank you for your contribution');
+        // let submitBtn = this.shadowRoot.getElementById("feedback-submit");
+        // submitBtn.value = "Submitted";
+        // console.log(submitBtn)
+    //     var form = this.shadowRoot.getElementById("contributionForm");
+    //     var formData = new FormData(form);
+    //   try {
+    //         const res = await fetch('http://127.0.0.1:5000/collect_user_feedback', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: formData
+    //         })
+    //         console.log(res)
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
+      }
 
     /**
      * Render the HTML of the component.
@@ -692,7 +755,28 @@ export class PopupFooter extends LitElement {
         return html`
         <div style="margin:2px">
             ${brw.i18n.getMessage("textMoreInformation")}: <a href="https://dpbh2023.in/index.html" target="_blank" ><br> <img src='../images/Logo.png' width='100px' class="neumorphic-image"/></a>.
+            <p class="neumorphic-text" @click=${this.toggleFormVisibility}>Want to contribute?</p>
+            <form id="contributionForm">
+            <label for="contributionText">Enter your contribution:</label>
+            <input type="text" id="contributionText" name="contributionText" required>
+            <br/>
+            <label for="contributionOption">Select an option:</label>
+            <br/>
+            <select id="contributionOption" name="contributionOption" required>
+              <option value="not_dark">Not a dark pattern</option>
+              <option value="countdown">Countdown</option>
+              <option value="scarcity">Scarcity</option>
+              <option value="sneaking">Sneaking</option>
+              <option value="obstruction">Obstruction</option>
+              <option value="mis_direction">Misdirection</option>
+              <option value="social-proof">Social-Proof</option>
+              <option value="Forced-Continuity">Forced-Continuity</option>
+            </select>
+            <br/>
+            <input type="submit" id='feedback-submit' @click=${this.submitForm} value='Submit' />
+          </form>
         </div>
+        
       `;
     }
 }
