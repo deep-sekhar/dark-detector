@@ -216,6 +216,7 @@ export const neumorphicForm = css`
             padding: 10px 20px;
             border-radius: 10px;
             background: linear-gradient(145deg, #e0e0e0, #f5f5f5);
+            user-select: none;
             box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.1),
                         -8px -8px 16px 0 rgba(255, 255, 255, 0.5);
             transition: background-color 0.3s;

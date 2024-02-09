@@ -754,27 +754,28 @@ export class PopupFooter extends LitElement {
     render() {
         return html`
         <div style="margin:2px">
-            ${brw.i18n.getMessage("textMoreInformation")}: <a href="https://dpbh2023.in/index.html" target="_blank" ><br> <img src='../images/Logo.png' width='100px' class="neumorphic-image"/></a>.
-            <p class="neumorphic-text" @click=${this.toggleFormVisibility}>Want to contribute?</p>
+        <p class="neumorphic-text" @click=${this.toggleFormVisibility}>Want to contribute?</p>
             <form id="contributionForm">
-            <label for="contributionText">Enter your contribution:</label>
-            <input type="text" id="contributionText" name="contributionText" required>
+                <label for="contributionText">Enter your contribution:</label>
+                <input type="text" id="contributionText" name="contributionText" required>
+                <br/>
+                <label for="contributionOption">Select an option:</label>
+                <br/>
+                <select id="contributionOption" name="contributionOption" required>
+                <option value="not_dark">Not a dark pattern</option>
+                <option value="countdown">Countdown</option>
+                <option value="scarcity">Scarcity</option>
+                <option value="sneaking">Sneaking</option>
+                <option value="obstruction">Obstruction</option>
+                <option value="mis_direction">Misdirection</option>
+                <option value="social-proof">Social-Proof</option>
+                <option value="Forced-Continuity">Forced-Continuity</option>
+                </select>
+                <br/>
+                <input type="submit" id='feedback-submit' @click=${this.submitForm} value='Submit' />
+            </form>
             <br/>
-            <label for="contributionOption">Select an option:</label>
-            <br/>
-            <select id="contributionOption" name="contributionOption" required>
-              <option value="not_dark">Not a dark pattern</option>
-              <option value="countdown">Countdown</option>
-              <option value="scarcity">Scarcity</option>
-              <option value="sneaking">Sneaking</option>
-              <option value="obstruction">Obstruction</option>
-              <option value="mis_direction">Misdirection</option>
-              <option value="social-proof">Social-Proof</option>
-              <option value="Forced-Continuity">Forced-Continuity</option>
-            </select>
-            <br/>
-            <input type="submit" id='feedback-submit' @click=${this.submitForm} value='Submit' />
-          </form>
+            ${brw.i18n.getMessage("textMoreInformation")}: <a href="https://dpbh2023.in/index.html" target="_blank" ><br> <img src='../images/Logo.png' width='100px' class="neumorphic-image"/></a>.
         </div>
         
       `;
