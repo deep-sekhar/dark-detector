@@ -151,8 +151,7 @@ async function initPatternHighlighter(){
                     } else if (message.action === "redoPatternHighlighting") {
                         // Run the pattern checking and highlighting again,
                         // send in response that the action has been started.
-                        patternHighlighting(mode="image");
-                        patternHighlighting(mode="text");
+                        patternHighlighting(mode="both");
                         sendResponse({ started: true });
                     } else if ("showElement" in message) {
                         // Highlight/show a single pattern element that was selected in the popup.
@@ -174,7 +173,7 @@ async function initPatternHighlighter(){
  * @type {MutationObserver}
  */
 const observer = new MutationObserver(async function () {
-    await patternHighlighting(true);
+    await patternHighlighting(waitForChanges = true, mode="both");
 });
 
 /**
@@ -184,7 +183,7 @@ const observer = new MutationObserver(async function () {
  * This will automatically highlight the element using predefined CSS styles.
  * @param {boolean} [waitForChanges=false] A flag to specify whether to wait briefly before executing the function.
  */
-async function patternHighlighting(mode, waitForChanges = false) {
+async function patternHighlighting(mode = "text", waitForChanges = false) {
     // Check if the pattern detection is already in progress.
     if (this.lock === true) {
         // If the pattern detection is already in progress, exit the function.
@@ -205,8 +204,6 @@ async function patternHighlighting(mode, waitForChanges = false) {
     // Add pattern highlighter IDs to every element on the page.
     addPhidForEveryElement(document.body);
     // const parser = new DOMParser();
-    // const parsed = parser.parseFromString(document.body, "text/html");
-    // console.log("+++",parsed.firstChild.innerText); // "title"
 
     // Create a copy of the DOM that can be modified afterwards.
     let domCopyA = document.body.cloneNode(true);
@@ -397,7 +394,7 @@ async function findPatternDeep(node, domOld, mode) {
 
     // EDGE CASE 
     // if leaf node and contains image tag
-    if(node.children.length === 0 && node.tagName === 'IMG' && mode === "image"){
+    if(node.children.length === 0 && node.tagName === 'IMG' && ( mode === "image" || mode === "both")){
         // extract the text from the image
         const res = await fetch('http://localhost:5000//predict_image', {
             method: 'POST',
