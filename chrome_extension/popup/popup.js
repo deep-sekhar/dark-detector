@@ -614,7 +614,7 @@ export class ShowPatternButtons extends LitElement {
             <h2 class='neumorphic-heading'>${brw.i18n.getMessage("headingShowPattern")}</h2>
             <div class="neumorphic-nav-container">
             <span class="button neumorphic-nav-button" @click=${this.showPreviousPattern}> ←</span>
-            <span>${brw.i18n.getMessage("showPatternState", [this.getCurrentPatternNumber(), this.results.countVisible?this.results.countVisible.toString():"..."])}</span>
+            <span>${brw.i18n.getMessage("showPatternState", [this.getCurrentPatternNumber(), this.results.countVisible ? this.results.countVisible.toString() : "..."])}</span>
             <span class="button neumorphic-nav-button" @click=${this.showNextPattern}>→</span>
             </div>
             ${this.getCurrentPatternText()}
@@ -647,11 +647,7 @@ export class SupportedPatternsList extends LitElement {
      * @returns {html} HTML of the component
      */
     render() {
-        return html`
-        <div>
-            
-        </div>
-      `;
+        return html` `;
     }
 }
 {/* <h2>${brw.i18n.getMessage("headingSupportedPatterns")}</h2>
@@ -696,23 +692,24 @@ export class PopupFooter extends LitElement {
         thankYouMessage.style.padding = '10px'; // Add padding for better appearance
         thankYouMessage.style.backgroundColor = '#f0f0f0'; // Light background color
         thankYouMessage.style.borderRadius = '10px'; // Rounded corners
-        thankYouMessage.style.boxShadow = '5px 5px 10px #bfbfbf, -5px -5px 10px #ffffff'; // Neumorphic box shadow      
-        this.shadowRoot.appendChild(thankYouMessage);
-      
+        thankYouMessage.style.boxShadow = '5px 5px 10px #bfbfbf, -5px -5px 10px #ffffff'; // Neumorphic box shadow
+        let form = this.shadowRoot.getElementById('contributionForm');
+        form.appendChild(thankYouMessage);
+
         // Remove the message after 5 seconds
         setTimeout(() => {
-          this.shadowRoot.removeChild(thankYouMessage);
+            form.removeChild(thankYouMessage);
         }, 5000);
     }
 
-    validateInput(){
+    validateInput() {
         let textInput = this.shadowRoot.getElementById('contributionText');
         let optionInput = this.shadowRoot.getElementById('contributionOption');
         return textInput.value === '' || optionInput.value === '';
 
     }
 
-    resetForm(){
+    resetForm() {
         let textInput = this.shadowRoot.getElementById('contributionText');
         textInput.value = "";
         let darkPatternInput = this.shadowRoot.getElementById('contributionOption');
@@ -720,32 +717,46 @@ export class PopupFooter extends LitElement {
         // console.log(darkPatternInput);
     }
 
+    //Submitting the feedback form
     async submitForm(event) {
         event.preventDefault(); // Prevent default form submission
-        if(this.validateInput()){
+        if (this.validateInput()) {
             this.showMessage("Please fill all the fields");
             return;
         }
-        this.resetForm();
-        this.showMessage('Thank you for your contribution');
-        // let submitBtn = this.shadowRoot.getElementById("feedback-submit");
-        // submitBtn.value = "Submitted";
-        // console.log(submitBtn)
-    //     var form = this.shadowRoot.getElementById("contributionForm");
-    //     var formData = new FormData(form);
-    //   try {
-    //         const res = await fetch('http://127.0.0.1:5000/collect_user_feedback', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: formData
-    //         })
-    //         console.log(res)
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-      }
+        let textInput = this.shadowRoot.getElementById('contributionText');
+        let optionInput = this.shadowRoot.getElementById('contributionOption');
+        try {
+            let submitBtn = this.shadowRoot.getElementById("feedback-submit");
+            submitBtn.value = "Submitting...";
+            const res = await fetch('http://127.0.0.1:5000/collect_user_feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text: textInput,
+                    prediction: optionInput
+                })
+            })
+        //If form is submitted, show the thank you msg
+        if(res.status == 201){
+            let submitBtn = this.shadowRoot.getElementById("feedback-submit");
+            submitBtn.value = 'Submit';
+            this.resetForm();
+            this.showMessage('Thank you for your contribution');
+        }
+        else{
+            let submitBtn = this.shadowRoot.getElementById("feedback-submit");
+            submitBtn.value = 'Submit';
+            this.showMessage('Failed to submit');
+        }
+        } catch (error) {
+            console.log(error)
+            this.showMessage('Failed to submit');
+        }
+
+    }
 
     /**
      * Render the HTML of the component.
