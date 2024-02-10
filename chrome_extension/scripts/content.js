@@ -396,29 +396,6 @@ async function handleChildClick(text, value) {
 
     let data = await res.json();
     console.log('Response:', data);
-
-    // Make the AJAX POST request
-    // fetch('http://127.0.0.1:5000/collect_user_feedback', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(postData)
-    // })
-    // .then(response => {
-    //     if (response.ok) {
-    //         return response.json();
-    //     }
-    //     throw new Error('Network response was not ok.');
-    // })
-    // .then(data => {
-    //     console.log('Response:', data);
-    //     // Handle the response from the server if needed
-    // })
-    // .catch(error => {
-    //     console.error('Error:', error);
-    //     // Handle errors if any
-    // });
 }
 
 async function findPatternDeep(node, domOld, mode) {
