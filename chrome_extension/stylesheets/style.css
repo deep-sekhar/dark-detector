@@ -75,6 +75,7 @@
 
   /* Add hover effect */
   .child1:hover, .child2:hover {
+    background-color: #e0e0e0; /* Lighter background color on hover */
     transform: translateY(-1px); /* Move the button slightly up */
   }
 
