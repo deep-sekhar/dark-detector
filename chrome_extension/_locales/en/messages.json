@@ -139,11 +139,23 @@
 },
 "patternMisdirection_infoUrl": {
   "message": "https://dpbh2023.in/index.html",
-  "description": "URL to the explanation of the misdirection pattern on the dapde.de website."
+  "description": "URL to the explanation of the misdirection pattern"
 },
 "patternMisdirection_info": {
   "message": "Description of the misdirection pattern.",
   "description": "Brief explanation of the misdirection pattern."
+},
+"patternUrgency_name": {
+  "message": "Urgency",
+  "description": "Name of the urgency pattern."
+},
+"patternUrgency_infoUrl": {
+  "message": "https://dpbh2023.in/index.html",
+  "description": "URL to the explanation of the urgency pattern"
+},
+"patternUrgency_info": {
+  "message": "Description of the urgency pattern.",
+  "description": "Brief explanation of the urgency pattern."
 },
   "showPatternState": {
     "message": "$CURRENT$ of $TOTAL$",
