@@ -32,7 +32,7 @@
     position: relative;
     top: -23px;
     left: calc(100% - 60px);
-    z-index: 10; /* Set a higher z-index to ensure it's on top of other content */
+    z-index: 200; /* Set a higher z-index to ensure it's on top of other content */
     transition: opacity 0.2s ease-in-out; /* Add a smooth transition effect */
     height: 0;
     overflow-y: visible;
