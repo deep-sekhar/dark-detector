@@ -371,6 +371,38 @@ async function makePredictionRequest(text) {
     }
   }
 
+// Define the event listener function
+function handleChildClick(text, value) {
+    // Prepare the data to be sent in the POST request
+    let postData = {
+        text: text,
+        prediction: value
+    };
+
+    // Make the AJAX POST request
+    fetch('http://127.0.0.1:5000/collect_user_feedback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error('Network response was not ok.');
+    })
+    .then(data => {
+        console.log('Response:', data);
+        // Handle the response from the server if needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors if any
+    });
+}
+
 async function findPatternDeep(node, domOld, mode) {
     // if node already has the dark pattern class, then return
     let regx = new RegExp("\\b" + constants.extensionClassPrefix + "[^ ]*[ ]?\\b", "g");
@@ -427,10 +459,12 @@ async function findPatternDeep(node, domOld, mode) {
                 let childElement1 = document.createElement('div');
                 childElement1.className = 'child1';
                 childElement1.textContent = '✓';
+                childElement1.addEventListener('click', handleChildClick(data.extracted_text, "Dark Pattern"));
 
                 let childElement2 = document.createElement('div');
                 childElement2.className = 'child2';
                 childElement2.textContent = '✗';
+                childElement2.addEventListener('click', handleChildClick(data.extracted_text, "Not a Dark Pattern"));
 
                 // Append the child elements to the child container
                 childContainer.appendChild(childElement1);
@@ -486,10 +520,12 @@ async function findPatternDeep(node, domOld, mode) {
             let childElement1 = document.createElement('div');
             childElement1.className = 'child1';
             childElement1.textContent = '✓';
+            childElement1.addEventListener('click', handleChildClick(node.textContent, "Dark Pattern"));
 
             let childElement2 = document.createElement('div');
             childElement2.className = 'child2';
             childElement2.textContent = '✗';
+            childElement2.addEventListener('click', handleChildClick(node.textContent, "Not a Dark Pattern"));
 
             // Append the child elements to the child container
             childContainer.appendChild(childElement1);
@@ -532,10 +568,12 @@ async function findPatternDeep(node, domOld, mode) {
                     let childElement1 = document.createElement('div');
                     childElement1.className = 'child1';
                     childElement1.textContent = '✓';
+                    childElement1.addEventListener('click', handleChildClick(node.textContent, "Dark Pattern"));
 
                     let childElement2 = document.createElement('div');
                     childElement2.className = 'child2';
                     childElement2.textContent = '✗';
+                    childElement2.addEventListener('click', handleChildClick(node.textContent, "Not a Dark Pattern"));
 
                     // Append the child elements to the child container
                     childContainer.appendChild(childElement1);

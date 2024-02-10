@@ -83,6 +83,7 @@ def predict_image():
         # print(extracted_text)
         if extracted_text == "":
             return jsonify({
+            'extracted_text' : "",
             'predicted_label': "--",
             'predicted_class_index': "0"
         })
@@ -95,6 +96,7 @@ def predict_image():
         predicted_label = id2label.get(predicted_class_index, f'Unknown Label ({predicted_class_index})')
         # Return the extracted text as response
         return jsonify({
+            'extracted_text' : extracted_text,
             'predicted_label': predicted_label,
             'predicted_class_index': predicted_class_index
         })
