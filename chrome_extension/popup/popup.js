@@ -782,6 +782,7 @@ export class PopupFooter extends LitElement {
                 <option value="mis_direction">Misdirection</option>
                 <option value="social-proof">Social-Proof</option>
                 <option value="Forced-Continuity">Forced-Continuity</option>
+                <option value="Urgency">Urgency</option>
                 </select>
                 <br/>
                 <input type="submit" id='feedback-submit' @click=${this.submitForm} value='Submit' />

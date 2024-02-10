@@ -8,7 +8,8 @@ const darkPatternTooltips = {
     "social-proof": "Social Proof Dark Pattern",
     "sneaking": "Sneaking Dark Pattern",
     "obstruction": "Obstruction Dark Pattern",
-    "forced-continuity": "Forced Continuity Dark Pattern"
+    "forced-continuity": "Forced Continuity Dark Pattern",
+    "urgency": "Urgency Dark Pattern"
 };
 
 /**
