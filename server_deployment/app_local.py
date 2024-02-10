@@ -11,8 +11,8 @@ import requests  # Import the requests module
 pytesseract.pytesseract.tesseract_cmd = os.environ.get('TESSERACT_PATH')
 
 # Load the model and tokenizer
-model = AutoModelForSequenceClassification.from_pretrained("sekhharr/hackathon_v2")
-tokenizer = AutoTokenizer.from_pretrained('sekhharr/hackathon_v2')
+model = AutoModelForSequenceClassification.from_pretrained("sekhharr/hackathon_v8")
+tokenizer = AutoTokenizer.from_pretrained('sekhharr/hackathon_v8')
 
 # Move the model to GPU if available
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -27,7 +27,8 @@ id2label = {
     4: "social-proof",
     5: "sneaking",
     6: "obstruction",
-    7: "forced-continuity"
+    7: "forced-continuity",
+    8: "urgency"
 }
 
 label2id = {label: idx for idx, label in id2label.items()}

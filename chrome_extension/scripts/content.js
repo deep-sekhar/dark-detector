@@ -400,6 +400,9 @@ async function handleChildClick(text, value) {
 }
 
 async function findPatternDeep(node, domOld, mode) {
+    // Extract the previous state of the node from the old DOM. Is `null` if the node did not exist yet.
+    let nodeOld = getElementByPhid(domOld, node.dataset.phid);
+
     // if node already has the dark pattern class, then return
     let regx = new RegExp("\\b" + constants.extensionClassPrefix + "[^ ]*[ ]?\\b", "g");
     let elem = getElementByPhid(document, node.dataset.phid);
@@ -407,6 +410,12 @@ async function findPatternDeep(node, domOld, mode) {
     if (elem) {
         // check if element classlist contains the pattern class
         if(elem.classList.contains(constants.patternDetectedClassName)){
+            // remove old node
+            if (nodeOld) {
+                nodeOld.remove();
+            }
+            // remove node 
+            node.remove();
             return;
         }
     }
@@ -416,9 +425,6 @@ async function findPatternDeep(node, domOld, mode) {
         // Execute the function recursively on each child node and wait for the result.
         await findPatternDeep(child, domOld, mode);
     }
-
-    // Extract the previous state of the node from the old DOM. Is `null` if the node did not exist yet.
-    let nodeOld = getElementByPhid(domOld, node.dataset.phid);
 
     // EDGE CASE 
     // if leaf node and contains image tag
