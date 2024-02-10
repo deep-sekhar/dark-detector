@@ -454,12 +454,12 @@ async function findPatternDeep(node, domOld, mode) {
 
                 let childElement1 = document.createElement('div');
                 childElement1.className = 'child1';
-                childElement1.textContent = '✓';
+                childElement1.textContent = '👍';
                 childElement1.addEventListener('click', async ()=> { await handleChildClick(data.extracted_text, "Dark Pattern")} );
 
                 let childElement2 = document.createElement('div');
                 childElement2.className = 'child2';
-                childElement2.textContent = '✗';
+                childElement2.textContent = '👎';
                 childElement2.addEventListener('click', async ()=> { await handleChildClick(data.extracted_text, "Not a Dark Pattern")});
 
                 // Append the child elements to the child container
@@ -515,12 +515,12 @@ async function findPatternDeep(node, domOld, mode) {
 
             let childElement1 = document.createElement('div');
             childElement1.className = 'child1';
-            childElement1.textContent = '✓';
+            childElement1.textContent = '👍';
             childElement1.addEventListener('click', async ()=> { await handleChildClick(node.textContent, "Dark Pattern")});
 
             let childElement2 = document.createElement('div');
             childElement2.className = 'child2';
-            childElement2.textContent = '✗';
+            childElement2.textContent = '👎';
             childElement2.addEventListener('click', async ()=> { await handleChildClick(node.textContent, "Not a Dark Pattern")});
 
             // Append the child elements to the child container
@@ -563,12 +563,12 @@ async function findPatternDeep(node, domOld, mode) {
 
                     let childElement1 = document.createElement('div');
                     childElement1.className = 'child1';
-                    childElement1.textContent = '✓';
+                    childElement1.textContent = '👍';
                     childElement1.addEventListener('click', async ()=> { await handleChildClick(node.textContent, "Dark Pattern")});
 
                     let childElement2 = document.createElement('div');
                     childElement2.className = 'child2';
-                    childElement2.textContent = '✗';
+                    childElement2.textContent = '👎';
                     childElement2.addEventListener('click', async ()=> { await handleChildClick(node.textContent, "Not a Dark Pattern")});
 
                     // Append the child elements to the child container
