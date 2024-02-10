@@ -173,7 +173,8 @@ async function initPatternHighlighter(){
  * @type {MutationObserver}
  */
 const observer = new MutationObserver(async function () {
-    await patternHighlighting(waitForChanges = true, mode="both");
+    await patternHighlighting(waitForChanges = true, mode="text");
+    await patternHighlighting(waitForChanges = true, mode="image");
 });
 
 /**
@@ -372,35 +373,52 @@ async function makePredictionRequest(text) {
   }
 
 // Define the event listener function
-function handleChildClick(text, value) {
+async function handleChildClick(text, value) {
     // Prepare the data to be sent in the POST request
     let postData = {
         text: text,
         prediction: value
     };
 
-    // Make the AJAX POST request
-    fetch('http://127.0.0.1:5000/collect_user_feedback', {
+    let res = await fetch('http://127.0.0.1:5000/collect_user_feedback',
+    {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(postData)
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-        throw new Error('Network response was not ok.');
-    })
-    .then(data => {
-        console.log('Response:', data);
-        // Handle the response from the server if needed
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // Handle errors if any
     });
+
+    if (!res.ok) {
+        console.error('Error:', res.statusText);
+        return;
+    }
+
+    let data = await res.json();
+    console.log('Response:', data);
+
+    // Make the AJAX POST request
+    // fetch('http://127.0.0.1:5000/collect_user_feedback', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(postData)
+    // })
+    // .then(response => {
+    //     if (response.ok) {
+    //         return response.json();
+    //     }
+    //     throw new Error('Network response was not ok.');
+    // })
+    // .then(data => {
+    //     console.log('Response:', data);
+    //     // Handle the response from the server if needed
+    // })
+    // .catch(error => {
+    //     console.error('Error:', error);
+    //     // Handle errors if any
+    // });
 }
 
 async function findPatternDeep(node, domOld, mode) {
@@ -459,12 +477,12 @@ async function findPatternDeep(node, domOld, mode) {
                 let childElement1 = document.createElement('div');
                 childElement1.className = 'child1';
                 childElement1.textContent = '✓';
-                childElement1.addEventListener('click', handleChildClick(data.extracted_text, "Dark Pattern"));
+                childElement1.addEventListener('click', async ()=> { await handleChildClick(data.extracted_text, "Dark Pattern")} );
 
                 let childElement2 = document.createElement('div');
                 childElement2.className = 'child2';
                 childElement2.textContent = '✗';
-                childElement2.addEventListener('click', handleChildClick(data.extracted_text, "Not a Dark Pattern"));
+                childElement2.addEventListener('click', async ()=> { await handleChildClick(data.extracted_text, "Not a Dark Pattern")});
 
                 // Append the child elements to the child container
                 childContainer.appendChild(childElement1);
@@ -520,12 +538,12 @@ async function findPatternDeep(node, domOld, mode) {
             let childElement1 = document.createElement('div');
             childElement1.className = 'child1';
             childElement1.textContent = '✓';
-            childElement1.addEventListener('click', handleChildClick(node.textContent, "Dark Pattern"));
+            childElement1.addEventListener('click', async ()=> { await handleChildClick(node.textContent, "Dark Pattern")});
 
             let childElement2 = document.createElement('div');
             childElement2.className = 'child2';
             childElement2.textContent = '✗';
-            childElement2.addEventListener('click', handleChildClick(node.textContent, "Not a Dark Pattern"));
+            childElement2.addEventListener('click', async ()=> { await handleChildClick(node.textContent, "Not a Dark Pattern")});
 
             // Append the child elements to the child container
             childContainer.appendChild(childElement1);
@@ -568,12 +586,12 @@ async function findPatternDeep(node, domOld, mode) {
                     let childElement1 = document.createElement('div');
                     childElement1.className = 'child1';
                     childElement1.textContent = '✓';
-                    childElement1.addEventListener('click', handleChildClick(node.textContent, "Dark Pattern"));
+                    childElement1.addEventListener('click', async ()=> { await handleChildClick(node.textContent, "Dark Pattern")});
 
                     let childElement2 = document.createElement('div');
                     childElement2.className = 'child2';
                     childElement2.textContent = '✗';
-                    childElement2.addEventListener('click', handleChildClick(node.textContent, "Not a Dark Pattern"));
+                    childElement2.addEventListener('click', async ()=> { await handleChildClick(node.textContent, "Not a Dark Pattern")});
 
                     // Append the child elements to the child container
                     childContainer.appendChild(childElement1);
