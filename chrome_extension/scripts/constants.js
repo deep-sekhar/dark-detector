@@ -410,12 +410,12 @@ export const patternConfig = {
             detectionFunctions: [
                 function (node, nodeOld) {
                     const urgencyRegex1 = /free delivery if ordered before [0-9]+:[0-5][0-9][ap]m/i;
-                    const urgencyRegex2 = /\bhurry up\b/i;
+                    const urgencyRegex2 = /\bhurry(?:\sup)?\b/i;
                     const urgencyRegex3 = /\bbuy it now\b/i;
-                    const urgencyRegex4 = /\blowest price in the year\b/i;
+                    const urgencyRegex4 = /\blowest price(?: \sin the year)\b/i;
                     const urgencyRegex5 = /\blowest price in [0-9]+ days\b/i;
-                    const urgencyRegex6 = /get a free gift with your purchase today only!/i;
-                    const urgencyRegex7 = /limited time offer! sign up now to receive a special discount/i;
+                    const urgencyRegex6 = /get a free gift with your purchase today only!|purchase today|free gift/i;
+                    const urgencyRegex7 = /limited time offer! sign up now to receive a special discount|limited time|limited time offer|sign up now|special discount|/i;
         
                     return urgencyRegex1.test(node.innerText) || 
                            urgencyRegex2.test(node.innerText) || 
