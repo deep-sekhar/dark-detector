@@ -24,7 +24,7 @@
     "description": "Text for the button to reload the page after a changed activation state."
   },
   "buttonRedoPatternCheck": {
-    "message": "Repeat pattern highlighting",
+    "message": "Repeat detection",
     "description": "Text for the button to repeat the pattern highlighting on the page."
   },
   "headingShowPattern": {

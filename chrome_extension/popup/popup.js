@@ -343,8 +343,9 @@ export class RedoButton extends LitElement {
             return html``;
         }
         return html`
-        <div>
-            <span @click=${this.redoPatternCheck}>${brw.i18n.getMessage("buttonRedoPatternCheck")}</span>
+        <div style="display: flex; justify-content: center; align-items: center;">
+        <img src="../images/refresh.png" height="30rem" alt="Refresh Icon" class="refresh-icon">
+        <span @click=${this.redoPatternCheck}>${brw.i18n.getMessage("buttonRedoPatternCheck")}</span>
         </div>
       `;
     }
