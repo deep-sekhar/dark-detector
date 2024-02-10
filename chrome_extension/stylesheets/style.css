@@ -32,7 +32,7 @@
     position: relative;
     top: -23px;
     left: calc(100% - 60px);
-    z-index: 200; /* Set a higher z-index to ensure it's on top of other content */
+    z-index: 10; /* Set a higher z-index to ensure it's on top of other content */
     transition: opacity 0.2s ease-in-out; /* Add a smooth transition effect */
     height: 0;
     overflow-y: visible;
@@ -64,12 +64,12 @@
   }
 
   .child1{
-    /* background-color: rgb(165, 239, 165); */
+    background-color: rgb(165, 239, 165);
     color: darkgreen;
   }
 
   .child2{
-    /* background-color: rgb(236, 138, 138); */
+    background-color: rgb(236, 138, 138);
     color: darkred;
   }
 
