@@ -24,13 +24,14 @@ We have fine-tuned a general purpose transformer model by building a custom data
 
 ## Installation
 <p align="center">
-  <img src="./images/Extension.png" alt="animated" />
+  <img src="./images/extension_2.png" alt="animated" style="height: 300px; width: auto;"/>
+
 </p>
 <p align="center">
   <img src="./images/logo1.png" alt="animated" />
 </p>
 <p align="center">
-  <img src="./images/example.png" alt="animated" />
+  <img src="./images/example_2.png" alt="animated" />
 </p>
 
 To install the extension, follow these steps:
@@ -82,6 +83,12 @@ Check if the path is same for your system. If not, change the path accordingly.
 3. The extension will analyze the page and notify you of any detected dark patterns.
 
 4. Stay informed and make ethical choices while shopping online!
+
+## Demo and Poster
+
+1. [Poster](https://drive.google.com/file/d/1ACDzyghQSkS4ob1WA6XMd5H9BkZcIAwD/view?usp=sharing)
+2. [Video demo](https://drive.google.com/file/d/19m_wfIfA6zAgcK5dRi9cOzYTRLI5wiSW/view?usp=drive_link)
+
 
 ## Meet the Team
 
