@@ -24,7 +24,7 @@ We have fine-tuned a general purpose transformer model by building a custom data
 
 ## Installation
 <p align="center">
-  <img src="./images/extension_2.png" alt="animated" style="height: 300px; width: auto;"/>
+  <img src="./images/extension_2.png" alt="animated" style="height: 400px; width: auto;"/>
 
 </p>
 <p align="center">
