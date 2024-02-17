@@ -402,7 +402,7 @@ export const patternConfig = {
                 function (node, nodeOld) {
                     // Regular expression to match percentages from 50% to 100% off with exactly two digits
                     // const discountRegex = /\b(?:5\d|100)%\s*off\b/i;
-                    const discountRegex = /\b(?:\d{2}|[6-9]\d|\d{3,})%\s*off\b/i;
+                    const discountRegex = /\b(?:\d{2}|[5-9]\d|\d{3,})%\s*off\b/i;
                     // Check if the text contains the discount pattern
                     return discountRegex.test(node.innerText);
                 }            

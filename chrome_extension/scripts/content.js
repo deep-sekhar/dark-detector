@@ -440,7 +440,7 @@ async function findPatternDeep(node, domOld, mode) {
             console.log("window area:",windowArea)
             console.log("ratio:",ratio)
             // if ratio is less than 10% then return 
-            if(ratio < 0.1){
+            if(ratio < 0.05){
                 console.log("RETURNING")
                 return;
             }
