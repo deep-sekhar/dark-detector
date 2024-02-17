@@ -147,6 +147,21 @@ def collect_user_feedback():
             return jsonify({"error": "Failed to insert data"}), 500
     else:
         return jsonify({"error": "No data provided"}), 400
+    
+@app.route('/data', methods=['GET'])
+def get_data():
+    # Query MongoDB for data
+    try:
+        client = MongoClient('mongodb+srv://thatsmeayushi2002:Ayushi123@cluster0.nj1phdt.mongodb.net/')
+        db = client['user_feedback']  
+        collection = db['Feedback']  
+        data = list(collection.find())
+        print("Sending data")
+        # Convert MongoDB documents to JSON format
+        return jsonify(data)   
+    
+    except Exception as e:
+        print("Failed to send ",e)
 
 if __name__ == '__main__':
     # Run the Flask application on localhost:5000
