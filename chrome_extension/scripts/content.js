@@ -429,6 +429,24 @@ async function findPatternDeep(node, domOld, mode) {
     // EDGE CASE 
     // if leaf node and contains image tag
     if(node.children.length === 0 && node.tagName === 'IMG' && ( mode === "image" || mode === "both")){
+        let elem = getElementByPhid(document, node.dataset.phid);
+        // Check if the element still exists.
+        if (elem) {
+            // get the ratio of the image area and window area from elem
+            let imageArea = elem.width * elem.height;
+            let windowArea = window.innerHeight * window.innerWidth;
+            let ratio = imageArea/windowArea;
+            console.log("image area:",imageArea)
+            console.log("window area:",windowArea)
+            console.log("ratio:",ratio)
+            // if ratio is less than 10% then return 
+            if(ratio < 0.1){
+                console.log("RETURNING")
+                return;
+            }
+        }else{
+            return;
+        }
         // extract the text from the image
         const res = await fetch('http://localhost:5000//predict_image', {
             method: 'POST',
@@ -443,12 +461,11 @@ async function findPatternDeep(node, domOld, mode) {
         const data = await res.json();
         // console.log("data: ", data.predicteds_label)
         if(data.predicted_class_index != 0){
-            // Find the element in the original DOM.
-            let elem = getElementByPhid(document, node.dataset.phid);
-            // Check if the element still exists.
-            if (elem) {
                 // Add a general class for patterns to the element
-                // and a class for the specific pattern the element represents.
+                // and a class for the specific pattern the element represents
+                let elem = getElementByPhid(document, node.dataset.phid);
+                // Check if the element still exists.
+                if (elem) {
                 elem.classList.add(
                     constants.patternDetectedClassName,
                     constants.extensionClassPrefix + data.predicted_label
@@ -474,7 +491,7 @@ async function findPatternDeep(node, domOld, mode) {
 
                 // Insert the first child element after the parent element
                 elem.parentNode.insertBefore(childContainer, elem.nextSibling);
-            }
+                }
             // Remove the previous state of the node, if it exists.
             if (nodeOld) {
                 nodeOld.remove();
@@ -482,7 +499,53 @@ async function findPatternDeep(node, domOld, mode) {
             // Remove the current state of the node.
             node.remove();
         }
-        return;
+        else{
+            // check using regex 
+            let txtt = data.extracted_text;
+            node.textContent = txtt;
+            nodeOld.textContent = txtt;
+            let foundPattern = findPatterInNode(node, nodeOld);
+            if (foundPattern) {
+                // Find the element in the original DOM.
+                let elem = getElementByPhid(document, node.dataset.phid);
+                // Check if the element still exists.
+                if (elem) {
+                    // Add a general class for patterns to the element
+                    // and a class for the specific pattern the element represents.
+                    elem.classList.add(
+                        constants.patternDetectedClassName,
+                        constants.extensionClassPrefix + foundPattern
+                    );
+        
+                    // Create the child element container
+                    let childContainer = document.createElement('div');
+                    childContainer.className = 'child';
+        
+                    let childElement1 = document.createElement('div');
+                    childElement1.className = 'child1';
+                    childElement1.textContent = '✓';
+                    childElement1.addEventListener('click', async ()=> { await handleChildClick(node.textContent, "Dark Pattern")});
+        
+                    let childElement2 = document.createElement('div');
+                    childElement2.className = 'child2';
+                    childElement2.textContent = '✗';
+                    childElement2.addEventListener('click', async ()=> { await handleChildClick(node.textContent, "Not a Dark Pattern")});
+        
+                    // Append the child elements to the child container
+                    childContainer.appendChild(childElement1);
+                    childContainer.appendChild(childElement2);
+        
+                    // Insert the first child element after the parent element
+                    elem.parentNode.insertBefore(childContainer, elem.nextSibling);
+                }
+                // Remove the previous state of the node, if it exists.
+                if (nodeOld) {
+                    nodeOld.remove();
+                }
+                // Remove the current state of the node.
+                node.remove();
+            }
+        }
     }
     if(mode == "image") return;
 
