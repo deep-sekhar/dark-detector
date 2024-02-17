@@ -725,8 +725,8 @@ export class PopupFooter extends LitElement {
             this.showMessage("Please fill all the fields");
             return;
         }
-        let textInput = this.shadowRoot.getElementById('contributionText');
-        let optionInput = this.shadowRoot.getElementById('contributionOption');
+        let textInput = this.shadowRoot.getElementById('contributionText').value;
+        let optionInput = this.shadowRoot.getElementById('contributionOption').value;
         try {
             let submitBtn = this.shadowRoot.getElementById("feedback-submit");
             submitBtn.value = "Submitting...";
