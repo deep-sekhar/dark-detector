@@ -88,6 +88,7 @@ Check if the path is same for your system. If not, change the path accordingly.
 
 1. [Poster](https://drive.google.com/file/d/1ACDzyghQSkS4ob1WA6XMd5H9BkZcIAwD/view?usp=sharing)
 2. [Video demo](https://drive.google.com/file/d/19m_wfIfA6zAgcK5dRi9cOzYTRLI5wiSW/view?usp=drive_link)
+3. [2 page Template](https://drive.google.com/file/d/1V1zDb0IXXBGKVAR-tSwgczyt0tBBCqBj/view?usp=sharing)
 
 
 ## Meet the Team
