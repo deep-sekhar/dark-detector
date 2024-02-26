@@ -386,7 +386,8 @@ export class FoundPatternsList extends LitElement {
         return html`
         <div>
             <h2 class='neumorphic-text'>${brw.i18n.getMessage("headingFoundPatterns")}</h2>
-            <h2 style="color: ${this.results.countVisible ? "red" : "green"}">${this.results.countVisible}</h2>
+            <h2 style="color: ${this.results.countVisible ?  this.results.countVisible>30? "red": this.results.countVisible>15? "#f79205" : "green" : "green"}">${this.results.countVisible}</h2>
+            <p style="color: ${this.results.countVisible ?  this.results.countVisible>30? "red": this.results.countVisible>15? "#f79205" : "green" : "green"}">${this.results.countVisible ?  this.results.countVisible>30? "You are not safe to browse!": this.results.countVisible>15? "Okayish, beware of dark patterns..." : "You are safe to browse" : "---"}</p>
             <ul>
                 ${this.results.patterns?.map((pattern) => {
             let currentPatternInfo = constants.patternConfig.patterns.find(p => p.name === pattern.name);
