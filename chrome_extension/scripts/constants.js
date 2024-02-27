@@ -312,11 +312,6 @@ export const patternConfig = {
                         //          "then £10pm"
                         return true;
                     }
-                    if (/after\s*(?:the)?\s*\d+(?:th|nd|rd|th)?\s*months?\s*(?:only|just)?\s*(?:(?:€|\$|£)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:dollars?|€|£|pounds?(?:\s*sterling)?))/i.test(node.innerText)) {
-                        // Example: "after the 24th months only $23.99"
-                        //          "after 6 months £10"
-                        return true;
-                    }
                     // Return `false` if no regular expression matches.
                     return false;
                 }
@@ -344,9 +339,18 @@ export const patternConfig = {
                 
                     // Check for keywords related to sneaking patterns in English.
                     const sneakingRegex = /(?:hidden|trial period|free trial|auto[-\s]?renew|renewal|recurring|subscription|membership)[\w\s]*(?:fee|charge|cost|price)?/i;
-                
+                   
+                    
                     // Check if the text contains the sneaking pattern keywords.
                     return sneakingRegex.test(node.innerText);
+                },
+                function(node, nodeOld){
+                    if (node.type === "checkbox" && node.checked) {
+                        // Checkbox is checked
+                        console.log(node, "node")
+                        return true;
+                    } 
+                    return false;
                 }
                 
             ],
@@ -354,6 +358,7 @@ export const patternConfig = {
             info: brw.i18n.getMessage("patternSneaking_info"),
             languages: ["en"]
         },
+
         {
             /**
              * Obstruction Pattern.
