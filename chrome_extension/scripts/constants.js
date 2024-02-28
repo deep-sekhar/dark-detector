@@ -43,13 +43,13 @@ export const patternConfig = {
                 function (node, nodeOld) {
                     // Return true if a match is found in the current text of the element for the timer pattern.
                     // The previous state of the element is not used.
-                
+
                     // Regular expression to match the timer pattern.
                     const timerRegex = /\b\d{1,2}h\s*:\s*\d{1,2}m\s*:\s*\d{1,2}s\b/i;
-                
+
                     // Check if the text contains the timer pattern.
                     return timerRegex.test(node.innerText);
-                },                
+                },
                 function (node, nodeOld) {
                     // Countdowns should only be identified as such if they are actively running and not static.
                     // Therefore, it is necessary to check first if there is an old state of the element and if the text in it has changed.
@@ -191,13 +191,13 @@ export const patternConfig = {
                     // using a regular expression for the social proof pattern with English words.
                     // The regular expression checks whether a number is followed by a combination of different keywords.
                     // The previous state of the element is not used.
-                
+
                     const socialProofRegex = /\d+\s*(?:other)?\s*(?:customers?|clients?|buyers?|users?|shoppers?|purchasers?|people)\s*(?:have\s+)?\s*(?:(?:also\s*)?(?:bought|purchased|ordered)|(?:rated|reviewed))\s*(?:this|the\s*following)\s*(?:product|article|item)s?/i;
-                
+
                     // Check if the text contains the social proof pattern.
                     return socialProofRegex.test(node.innerText);
                 }
-                
+
             ],
             infoUrl: brw.i18n.getMessage("patternSocialProof_infoUrl"),
             info: brw.i18n.getMessage("patternSocialProof_info"),
@@ -240,6 +240,14 @@ export const patternConfig = {
                         //          "after 6 months ₹10"
                         return true;
                     }
+                    if(/agree\s*(?:to)?\s*(?:terms|condition|privacy|policy)?/i.test(node.innerText)){
+                        console.log(node.innerText)
+                        return true;
+                    }
+                    if(/(?:subscibe|send)\s*(?:newsletter|update|updates)?/i.test(node.innerText)){
+                        console.log(node.innerText)
+                        return true;
+                    }
                     // Return `false` if no regular expression matches.
                     return false;
                 },
@@ -278,19 +286,19 @@ export const patternConfig = {
                     // The regular expressions check for combinations of a price specification
                     // in Euro, Dollar, or Pound and the specification of a month.
                     // The previous state of the element is not used.
-                
+
                     const currencyRegex = /(?:€|\$|£|\₹|INR)/i;
                     const priceRegex = /\d+(?:\.\d{2})?/;
                     const monthRegex = /\d+(?:th|nd|rd|th)?(?:\s*months?|days?)/i;
-                
+
                     const continuityRegex = new RegExp(
                         `(?:(?:${currencyRegex.source})\\s*${priceRegex.source}|${priceRegex.source}\\s*(?:rupees?|${currencyRegex.source}))\\s*(?:(?:(?:per|\\/|a)\\s*month)|(?:p|\\/)m)\\s*(?:after|from\\s*(?:month|day)\\s*${monthRegex.source})`,
                         'i'
                     );
-                
+
                     // Check if the text contains the forced continuity pattern.
                     return continuityRegex.test(node.innerText);
-                },                
+                },
                 function (node, nodeOld) {
                     // Return true if a match is found in the current text of the element,
                     // using multiple regular expressions for the forced proof continuity with English words.
@@ -315,7 +323,7 @@ export const patternConfig = {
                     // Return `false` if no regular expression matches.
                     return false;
                 }
-                
+
             ],
             infoUrl: brw.i18n.getMessage("patternForcedContinuity_infoUrl"),
             info: brw.i18n.getMessage("patternForcedContinuity_info"),
@@ -336,23 +344,23 @@ export const patternConfig = {
                     // Return true if a match is found in the current text of the element,
                     // using regular expressions for detecting various sneaking patterns.
                     // The previous state of the element is not used.
-                
+
                     // Check for keywords related to sneaking patterns in English.
                     const sneakingRegex = /(?:hidden|trial period|free trial|auto[-\s]?renew|renewal|recurring|subscription|membership)[\w\s]*(?:fee|charge|cost|price)?/i;
-                   
-                    
+
+
                     // Check if the text contains the sneaking pattern keywords.
                     return sneakingRegex.test(node.innerText);
                 },
-                function(node, nodeOld){
+                function (node, nodeOld) {
                     if (node.type === "checkbox" && node.checked) {
                         // Checkbox is checked
                         console.log(node, "node")
                         return true;
-                    } 
+                    }
                     return false;
                 }
-                
+
             ],
             infoUrl: brw.i18n.getMessage("patternSneaking_infoUrl"),
             info: brw.i18n.getMessage("patternSneaking_info"),
@@ -372,10 +380,10 @@ export const patternConfig = {
                     // Return true if a match is found in the current text of the element,
                     // using regular expressions for detecting various obstruction patterns.
                     // The previous state of the element is not used.
-                
+
                     // Check for keywords related to obstruction patterns in English.
                     const obstructionRegex = /(?:blocked access|restricted access|limited access|access denied|paywall|authorization required|premium content|members only|exclusive content|obstruction|restricted content)[\w\s]*(?:subscribe|payment|membership|access|unlock|fee|charge|cost|price)?/i;
-                
+
                     // Check if the text contains the obstruction pattern keywords.
                     return obstructionRegex.test(node.innerText);
                 }
@@ -397,10 +405,10 @@ export const patternConfig = {
                     // Return true if a match is found in the current text of the element,
                     // indicating a misdirection pattern related to expressing a preference for paying the full amount.
                     // The previous state of the element is not used.
-                
+
                     // Check if the text contains phrases indicating a preference for paying the full amount.
                     const misdirectionRegex = /\b(?:no|not|don't)\s*(?:want|like|prefer)\s*to\s*pay\s*full\b/i;
-                
+
                     // Check if the text contains the misdirection pattern keywords.
                     return misdirectionRegex.test(node.innerText);
                 },
@@ -411,7 +419,7 @@ export const patternConfig = {
                     const discountRegex = /\b(?:7[0-9]|[8-9][0-9]|100)%\s*off\b/i;
                     // Check if the text contains the discount pattern
                     return discountRegex.test(node.innerText);
-                }            
+                }
             ],
             infoUrl: brw.i18n.getMessage("patternMisdirection_infoUrl"),
             info: brw.i18n.getMessage("patternMisdirection_info"),
@@ -429,21 +437,21 @@ export const patternConfig = {
                     const urgencyRegex5 = /\blowest price in [0-9]+ days\b/i;
                     const urgencyRegex6 = /\bget a free gift with your purchase today only\b!|\bpurchase today\b|\bfree gift\b/i;
                     const urgencyRegex7 = /\blimited time offer\b|\bsign up now to receive a special discount\b|\blimited time\b|\blimited time offer\b|\bsign up now\b|\bspecial discount\b/i;
-        
-                    return urgencyRegex1.test(node.innerText) || 
-                           urgencyRegex2.test(node.innerText) || 
-                           urgencyRegex3.test(node.innerText) || 
-                           urgencyRegex4.test(node.innerText) || 
-                           urgencyRegex5.test(node.innerText) || 
-                           urgencyRegex6.test(node.innerText) || 
-                           urgencyRegex7.test(node.innerText);
+
+                    return urgencyRegex1.test(node.innerText) ||
+                        urgencyRegex2.test(node.innerText) ||
+                        urgencyRegex3.test(node.innerText) ||
+                        urgencyRegex4.test(node.innerText) ||
+                        urgencyRegex5.test(node.innerText) ||
+                        urgencyRegex6.test(node.innerText) ||
+                        urgencyRegex7.test(node.innerText);
                 }
             ],
             infoUrl: brw.i18n.getMessage("patternUrgency_infoUrl"),
             info: brw.i18n.getMessage("patternUrgency_info"),
             languages: ["en"]
         }
-        
+
     ]
 }
 

@@ -396,7 +396,7 @@ async function handleChildClick(text, value) {
     }
 
     let data = await res.json();
-    console.log('Response:', data);
+    // console.log('Response:', data);
 }
 
 async function findPatternDeep(node, domOld, mode) {
@@ -465,7 +465,6 @@ async function findPatternDeep(node, domOld, mode) {
                 // and a class for the specific pattern the element represents
                 let elem = getElementByPhid(document, node.dataset.phid);
                 // Check if the element still exists.
-                console.log(elem, "elem468");
                 if (elem) {
                 elem.classList.add(
                     constants.patternDetectedClassName,
@@ -513,7 +512,6 @@ async function findPatternDeep(node, domOld, mode) {
                 if (elem) {
                     // Add a general class for patterns to the element
                     // and a class for the specific pattern the element represents.
-                    console.log(elem, "elem516")
                     elem.classList.add(
                         constants.patternDetectedClassName,
                         constants.extensionClassPrefix + foundPattern
@@ -561,7 +559,6 @@ async function findPatternDeep(node, domOld, mode) {
         // Find the element in the original DOM.
         let elem = getElementByPhid(document, node.dataset.phid);
         // Check if the element still exists.
-        console.log(elem, "elem564")
         if (elem) {
             if(elem.type == "checkbox")elem = elem.parentNode;
             // Add a general class for patterns to the element
@@ -625,7 +622,6 @@ async function findPatternDeep(node, domOld, mode) {
                     // and a class for the specific pattern the element represents.
                     // console.log(constants.patternDetectedClassName)
                     // console.log(constants.extensionClassPrefix + foundPattern)
-                    console.log(elem, "elem626");
                     elem.classList.add(
                         constants.patternDetectedClassName,
                         constants.extensionClassPrefix + prediction.predicted_label
